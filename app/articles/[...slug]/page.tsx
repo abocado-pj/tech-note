@@ -9,7 +9,9 @@ import {
   getArticleBySlug,
   getRelatedArticles,
 } from "@/lib/articles";
-import { getBookForSeries } from "@/lib/books";
+import { getAllBooks } from "@/lib/books";
+import { getAllNotes } from "@/lib/notes";
+import { getBooksUsingArticle, getNotesForArticle } from "@/lib/reading-relations";
 import { getSeriesBookDefinition } from "@/lib/series-books";
 import { absoluteUrl } from "@/lib/site";
 
@@ -83,17 +85,32 @@ export default async function ArticlePage({ params }: PageProps) {
   const series = article.series
     ? getSeriesBookDefinition(article.series.slug)
     : undefined;
-  const book = article.series
-    ? getBookForSeries(article.series.name)
-    : undefined;
+  const books = getBooksUsingArticle(article, getAllBooks());
+  const notes = getNotesForArticle(article, getAllNotes());
   return (
     <article className="page-shell reader-shell">
       <ArticleReader article={article} />
-      {series || book ? (
+      {notes.length ? (
+        <section className="reading-context" aria-labelledby="related-notes-heading">
+          <h2 id="related-notes-heading">関連する短いノート</h2>
+          {notes.map((note) => (
+            <p key={note.slug}><Link href={note.url}>{note.title} →</Link></p>
+          ))}
+        </section>
+      ) : null}
+      {books.length ? (
+        <section className="reading-context" aria-labelledby="related-books-heading">
+          <h2 id="related-books-heading">この知見を含むブック</h2>
+          {books.map((book) => (
+            <p key={book.slug}><Link href={book.url}>{book.title} →</Link></p>
+          ))}
+        </section>
+      ) : null}
+      {series ? (
         <section className="reading-context">
-          <h2>{series ? "シリーズを読み進める" : "ブックでまとめて読む"}</h2>
-          <Link href={series ? `/series/${series.slug}` : book!.url}>
-            {series?.name ?? book!.title} →
+          <h2>同じテーマのシリーズ</h2>
+          <Link href={`/series/${series.slug}`}>
+            {series.name} →
           </Link>
         </section>
       ) : null}

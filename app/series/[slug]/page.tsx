@@ -48,7 +48,9 @@ export default async function SeriesDetailPage({ params }: PageProps) {
         <h1 className="page-heading">{series.name}</h1>
         <p className="page-subtitle">{series.description}</p>
       </header>
-      <p className="reader-description">{series.goal}</p>
+      <p className="reader-description">
+        共通テーマの独立した記事です。関心のある記事から読めます。
+      </p>
       {series.sections.map((section) => (
         <section className="series-collection" key={section.title}>
           <h2>{section.title}</h2>
@@ -66,7 +68,7 @@ export default async function SeriesDetailPage({ params }: PageProps) {
         </section>
       ))}
       <Link className="text-link" href="/books">
-        章立てで読むブックへ →
+        広いテーマを体系的に読むブックへ →
       </Link>
     </div>
   );

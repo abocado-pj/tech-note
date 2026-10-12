@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getSeries } from "@/lib/articles";
+import { SERIES_DESCRIPTION } from "@/lib/reading-formats";
 
 export const metadata: Metadata = {
   title: "シリーズ",
-  description: "共通のテーマを、ひとつずつ読み進める。",
+  description: SERIES_DESCRIPTION,
 };
 
 export default function SeriesPage() {
@@ -13,7 +14,7 @@ export default function SeriesPage() {
     <div className="page-shell narrow-collection">
       <header className="collection-header">
         <h1 className="page-heading">シリーズ</h1>
-        <p className="page-subtitle">共通のテーマを、ひとつずつ読み進める。</p>
+        <p className="page-subtitle">{SERIES_DESCRIPTION}</p>
       </header>
       {series.map((item) => (
         <section className="series-collection" key={item.slug}>
@@ -33,7 +34,7 @@ export default function SeriesPage() {
             ))}
           </ol>
           <Link className="text-link" href={`/series/${item.slug}`}>
-            目次と読む順番 →
+            テーマから記事を選ぶ →
           </Link>
         </section>
       ))}

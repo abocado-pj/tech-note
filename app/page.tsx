@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArticleCard } from "@/components/article-card";
 import { BookCard } from "@/components/book-card";
 import { SearchPanel } from "@/components/search-panel";
+import { ReadingFormats } from "@/components/reading-formats";
 import {
   getAllArticles,
   getCategories,
@@ -13,6 +14,7 @@ import { getNoteSearchIndex } from "@/lib/notes";
 
 export default function HomePage() {
   const articles = getAllArticles().slice(0, 6);
+  const series = getSeries();
   return (
     <div className="page-shell library-home">
       <header className="library-intro">
@@ -27,6 +29,7 @@ export default function HomePage() {
           ]}
         />
       </header>
+      <ReadingFormats />
       <div className="library-columns">
         <div className="min-w-0">
           <section aria-labelledby="recent-heading">
@@ -37,6 +40,24 @@ export default function HomePage() {
             <div className="article-list">
               {articles.map((article) => (
                 <ArticleCard key={article.slug} article={article} />
+              ))}
+            </div>
+          </section>
+          <section className="library-section" aria-labelledby="series-heading">
+            <div className="section-heading">
+              <h2 id="series-heading">テーマ別のシリーズ</h2>
+              <Link href="/series">すべてのシリーズ →</Link>
+            </div>
+            <p className="page-subtitle">
+              共通テーマの独立した記事を、関心のあるものから読む。
+            </p>
+            <div className="series-list">
+              {series.map((item) => (
+                <Link key={item.slug} className="series-link" href={`/series/${item.slug}`}>
+                  <strong>{item.name}</strong>
+                  <span>{item.subtitle}</span>
+                  <span>{item.articles.length}記事 · 記事を選ぶ →</span>
+                </Link>
               ))}
             </div>
           </section>
@@ -63,20 +84,6 @@ export default function HomePage() {
                 </Link>
               ))}
             </nav>
-          </section>
-          <section>
-            <h2>シリーズ</h2>
-            {getSeries().map((item) => (
-              <Link
-                key={item.slug}
-                className="series-link"
-                href={`/series/${item.slug}`}
-              >
-                <strong>{item.name}</strong>
-                <span>{item.subtitle}</span>
-                <span className="text-link">目次を見る →</span>
-              </Link>
-            ))}
           </section>
           <Link className="text-link" href="/notes">
             短いノートを読む →

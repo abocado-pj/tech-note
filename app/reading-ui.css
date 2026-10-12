@@ -165,6 +165,33 @@ a {
   grid-template-columns: minmax(0, 1fr) 222px;
   gap: 66px;
 }
+.reading-formats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+.reading-format {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid var(--tech-border);
+  line-height: 1.85;
+}
+.reading-format span {
+  color: var(--reading-muted);
+  font-size: 0.875rem;
+}
+.series-list {
+  display: grid;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+@media (max-width: 680px) {
+  .reading-formats {
+    grid-template-columns: 1fr;
+  }
+}
 .library-sidebar h2 {
   font-size: 13px;
   color: var(--reading-muted);
@@ -722,7 +749,7 @@ body.book-reading-mode::after {
     gap: 28px;
   }
   .reading-layout > aside {
-    order: -1;
+    order: 1;
     position: static;
     width: 100%;
   }

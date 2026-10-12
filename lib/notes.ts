@@ -35,6 +35,7 @@ const noteFrontmatterSchema = z.object({
   source: z.enum(["ai-dialogue", "manual", "reading", "learning"]).default("manual"),
   draft: z.boolean().default(false),
   thumbnail: z.string().optional(),
+  related_article_ids: z.array(z.string().min(1)).default([]),
 });
 
 export type NoteFrontmatter = z.infer<typeof noteFrontmatterSchema>;
@@ -51,6 +52,7 @@ export type Note = {
   source: "ai-dialogue" | "manual" | "reading" | "learning";
   draft: boolean;
   thumbnail?: string;
+  relatedArticleSlugs: string[];
   slug: string;
   slugSegments: string[];
   sourcePath: string;
@@ -108,6 +110,7 @@ export function parseNoteFile(filePath: string): Note {
 
   return {
     ...frontmatter,
+    relatedArticleSlugs: frontmatter.related_article_ids,
     areaSlug: slugify(frontmatter.area),
     slug,
     slugSegments,

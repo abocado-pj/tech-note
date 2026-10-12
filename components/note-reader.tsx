@@ -1,7 +1,5 @@
 import Link from "next/link";
-import { ArticleThumbnail } from "@/components/article-thumbnail";
 import { MdxContent } from "@/components/mdx-content";
-import { TableOfContents } from "@/components/toc";
 import { formatDate } from "@/lib/format";
 import type { Note } from "@/lib/notes";
 import styles from "./note-reader.module.css";
@@ -15,9 +13,7 @@ type NoteReaderProps = {
     | "date"
     | "updated"
     | "readingTimeMinutes"
-    | "thumbnail"
     | "content"
-    | "headings"
   >;
 };
 
@@ -44,21 +40,11 @@ export function NoteReader({ note }: NoteReaderProps) {
               </time>
               <span>{note.readingTimeMinutes}分で読めます</span>
             </div>
-            {note.thumbnail ? (
-              <div className={styles.cover}>
-                <ArticleThumbnail article={note} priority framed={false} />
-              </div>
-            ) : null}
           </header>
           <div className={`prose ${styles.body}`}>
             <MdxContent source={note.content} variant="notebook" />
           </div>
         </div>
-        {note.headings.length ? (
-          <aside className={styles.contents}>
-            <TableOfContents headings={note.headings} />
-          </aside>
-        ) : null}
       </div>
     </div>
   );

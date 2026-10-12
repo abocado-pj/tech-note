@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { NoteReader } from "@/components/note-reader";
 import { getAllNotes, getNoteBySlug } from "@/lib/notes";
+import { getAllArticles } from "@/lib/articles";
+import { getArticlesForNote } from "@/lib/reading-relations";
 import { absoluteUrl } from "@/lib/site";
 
 type PageProps = {
@@ -70,9 +73,18 @@ export default async function NotePage({ params }: PageProps) {
   const { slug } = await params;
   const note = getNoteBySlug(slug);
   if (!note) notFound();
+  const relatedArticles = getArticlesForNote(note, getAllArticles());
   return (
     <article className="page-shell reader-shell">
       <NoteReader note={note} />
+      {relatedArticles.length ? (
+        <section className="reading-context" aria-labelledby="related-articles-heading">
+          <h2 id="related-articles-heading">関連する詳しい記事</h2>
+          {relatedArticles.map((article) => (
+            <p key={article.slug}><Link href={article.url}>{article.title} →</Link></p>
+          ))}
+        </section>
+      ) : null}
     </article>
   );
 }
