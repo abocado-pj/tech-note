@@ -74,7 +74,7 @@ body {
 .section-heading h2 { font-size: 25px; font-weight: 700; }
 .article-row { align-items: stretch; gap: 24px; }
 .article-row__image { flex-basis: 190px; border-radius: 5px; background: #f0eee5; }
-.article-row__image .tech-thumbnail { aspect-ratio: 16/10; }
+.article-row__image .tech-thumbnail { aspect-ratio: 16/9; }
 .article-row h2 { font-weight: 700; font-size: 20px; }
 .article-row__meta a { padding: 4px 10px; border-radius: 5px; background: var(--reading-soft); }
 .tech-thumbnail { background: #f1eee5; border: 0; }
@@ -87,12 +87,12 @@ body {
 .library-home .article-row time { display: none; }
 .article-row--compact { display: block; }
 .series-link { grid-template-columns: 150px minmax(0, 1fr); border: 1px solid var(--tech-border); border-radius: 6px; padding: 16px 24px; background: var(--tech-surface); gap: 8px 24px; }
-.series-link > .paper-scene { grid-column: 1; grid-row: 1 / 4; align-self: center; background: #f1eee5; border-radius: 4px; }
+.series-link > .tech-thumbnail { grid-column: 1; grid-row: 1 / 4; align-self: center; border-radius: 4px; }
 .series-link > strong, .series-link > span { grid-column: 2; }
 .series-link strong { font-size: 20px; }
 .series-catalog { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
 .series-catalog .series-collection { border: 1px solid var(--tech-border); border-radius: 6px; padding: 20px; margin: 0; background: var(--tech-surface); }
-.series-catalog .paper-scene { background: #f1eee5; margin-bottom: 18px; border-radius: 4px; }
+.series-catalog .tech-thumbnail { margin-bottom: 18px; border-radius: 4px; }
 .series-detail-heading { position: relative; padding-right: 40%; min-height: 250px; }
 .series-detail-heading > .paper-scene { position: absolute; right: 0; top: 12px; width: 37%; }
 .series-detail-heading .publication-badge { margin-top: 18px; }
@@ -138,7 +138,17 @@ body {
 .reading-prose, .book-prose { color: var(--foreground); }
 .prose h2 { border-left: 5px solid #bdd0c1; padding-left: 14px; font-weight: 700; }
 .prose a { color: var(--reading-accent); }
-.prose pre { background: var(--reading-soft); border-color: var(--tech-border); }
+.code-block pre { background: var(--tech-surface); color: var(--foreground); border-color: var(--tech-border); }
+/* Pretty Code emits theme variables; select their colors with the site theme. */
+.code-block pre span[style*="--shiki-light"] {
+  color: var(--shiki-light);
+  color: color-mix(in srgb, var(--shiki-light) 80%, black);
+}
+html.dark .code-block pre span[style*="--shiki-dark"] {
+  color: var(--shiki-dark);
+  color: color-mix(in srgb, var(--shiki-dark) 75%, white);
+}
+.code-copy-button { color: var(--foreground); background: var(--reading-soft); border-color: var(--tech-border); }
 .prose th { background: var(--reading-soft); color: var(--foreground); }
 .reading-context { max-width: none; }
 .related-reading { max-width: none; }

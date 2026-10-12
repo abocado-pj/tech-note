@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArticleCard } from "@/components/article-card";
+import { ArticleThumbnail } from "@/components/article-thumbnail";
 import { BookCard } from "@/components/book-card";
 import { SearchPanel } from "@/components/search-panel";
 import { ReadingFormats } from "@/components/reading-formats";
@@ -63,7 +64,9 @@ export default function HomePage() {
             <div className="series-list">
               {series.map((item) => (
                 <Link key={item.slug} className="series-link" href={`/series/${item.slug}`}>
-                  <PaperScene subject={item.slug === "world-file-extensions" ? "code" : "layers"} />
+                  {item.articles[0]?.thumbnail ? (
+                    <ArticleThumbnail article={item.articles[0]} framed={false} />
+                  ) : null}
                   <strong>{item.name}</strong>
                   <span>{item.subtitle}</span>
                   <span>{item.articles.length}記事 · 記事を選ぶ →</span>

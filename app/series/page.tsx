@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getSeries } from "@/lib/articles";
 import { SERIES_DESCRIPTION } from "@/lib/reading-formats";
 import { CollectionHero } from "@/components/collection-hero";
-import { PaperScene } from "@/components/paper-scene";
+import { ArticleThumbnail } from "@/components/article-thumbnail";
 
 export const metadata: Metadata = {
   title: "シリーズ",
@@ -18,7 +18,11 @@ export default function SeriesPage() {
       <div className="series-catalog">
       {series.map((item) => (
         <section className="series-collection" key={item.slug}>
-          <Link href={`/series/${item.slug}`} tabIndex={-1} aria-hidden><PaperScene subject={item.slug === "world-file-extensions" ? "code" : "layers"} /></Link>
+          {item.articles[0]?.thumbnail ? (
+            <Link href={`/series/${item.slug}`} tabIndex={-1} aria-hidden>
+              <ArticleThumbnail article={item.articles[0]} framed={false} />
+            </Link>
+          ) : null}
           <p className="eyebrow">{item.category}</p>
           <h2>
             <Link href={`/series/${item.slug}`}>{item.name}</Link>
