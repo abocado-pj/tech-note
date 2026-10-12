@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArticleCard } from "@/components/article-card";
 import { Pagination } from "@/components/pagination";
+import { CollectionHero } from "./collection-hero";
 import {
   getAllArticles,
   getCategories,
@@ -13,13 +14,12 @@ export function ArticleIndex({ page = 1 }: { page?: number }) {
   const paginated = paginateArticles(getAllArticles(), page, ARTICLES_PER_PAGE);
   return (
     <div className="page-shell">
-      <header className="collection-header">
-        <h1 className="page-heading">記事</h1>
-        <p className="page-subtitle">気になるテーマから読み進める。</p>
+      <CollectionHero title="記事" description="気になる問いを、具体例と詳しい解説から読む。" />
+      <div className="collection-links">
         <Link className="text-link" href="/search">
           キーワードで検索 →
         </Link>
-      </header>
+      </div>
       <div className="library-columns">
         <div>
           <div className="article-list">

@@ -3,9 +3,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { ThemeScript } from "@/components/theme-toggle";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, absoluteUrl, withBasePath } from "@/lib/site";
 import "./globals.css";
 import "./reading-ui.css";
+import "./v2-ui.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +25,7 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
+  icons: { icon: withBasePath("/favicon.svg") },
   alternates: {
     canonical: absoluteUrl("/"),
   },
@@ -70,7 +72,7 @@ export default function RootLayout({
           本文へ移動
         </a>
         <SiteHeader />
-        <main id="main-content" className="flex-1">
+        <main id="main-content" className="flex-1" tabIndex={-1}>
           {children}
         </main>
         <SiteFooter />

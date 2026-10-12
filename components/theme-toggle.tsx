@@ -60,7 +60,7 @@ export function ThemeToggle() {
   ];
 
   return (
-    <div className="tech-shell flex h-9 items-center rounded-lg border p-1">
+    <div className="theme-toggle" role="group" aria-label="表示テーマ">
       {items.map((item) => {
         const Icon = item.icon;
         return (
@@ -74,6 +74,7 @@ export function ThemeToggle() {
             }`}
             onClick={() => updateTheme(item.value)}
             aria-label={item.label}
+            aria-pressed={theme === item.value}
             title={item.label}
           >
             <Icon aria-hidden size={15} />

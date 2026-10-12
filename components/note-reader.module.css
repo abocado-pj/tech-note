@@ -13,6 +13,13 @@
   color: var(--note-ink);
 }
 
+/* A note is one quiet document, rather than a miniature book spread. */
+.reader, :global(html.dark) .reader {
+  --note-paper: var(--background);
+  --note-ink: var(--foreground);
+  --note-muted: var(--reading-muted);
+}
+
 :global(html.dark) .reader {
   --note-paper: #202824;
   --note-ink: #e3e9e2;
@@ -465,3 +472,14 @@
     text-decoration-color: currentColor;
   }
 }
+
+/* V2 keeps existing body widgets and technical images, with a simple document shell. */
+.reader .paper { border: 0; background: transparent; box-shadow: none; }
+.reader .paper::before { display: none; }
+.reader .heading { padding: 0 0 1.25rem; }
+.reader .heading h1 { font-size: clamp(1.9rem, 3.4vw, 3rem); font-weight: 720; }
+.reader .paperLabel { color: var(--reading-accent); font-size: .85rem; letter-spacing: 0; }
+.reader .body { padding: 0; background-image: none; line-height: 1.95; }
+.reader .body :where(p, ul, ol, blockquote) { line-height: 1.95; margin-block: 1.2em; }
+.reader .body h2 { border-left: 4px solid #bdd0c1; padding-left: .8rem; }
+.reader .meta { margin-top: 1rem; }

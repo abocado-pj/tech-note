@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllNotes } from "@/lib/notes";
 import { formatDate } from "@/lib/format";
+import { CollectionHero } from "@/components/collection-hero";
 
 export const metadata: Metadata = {
   title: "ノート",
@@ -12,17 +13,13 @@ export default function NotesPage() {
   const notes = getAllNotes();
   return (
     <div className="page-shell narrow-collection">
-      <header className="collection-header">
-        <h1 className="page-heading">ノート</h1>
-        <p className="page-subtitle">ひとつの気づきや検討を、短く読む。</p>
-      </header>
+      <CollectionHero title="ノート" description="気づいたことを、1ページに。短く気軽な記録を読む。" subject="note" />
       <div className="article-list">
         {notes.map((note) => (
           <article className="article-row" key={note.slug}>
             <div className="article-row__body">
               <div className="article-row__meta">
                 <span>{note.area}</span>
-                <span>{note.readingTimeMinutes}分</span>
               </div>
               <h2>
                 <Link href={note.url}>{note.title}</Link>

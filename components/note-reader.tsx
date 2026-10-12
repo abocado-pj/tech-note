@@ -29,7 +29,7 @@ export function NoteReader({ note }: NoteReaderProps) {
         <div className={styles.paper}>
           <header className={styles.heading}>
             <p className={styles.paperLabel} aria-hidden>
-              Tech Note · Notebook
+              ノート
             </p>
             <h1>{note.title}</h1>
             <p className={styles.description}>{note.description}</p>
@@ -38,7 +38,6 @@ export function NoteReader({ note }: NoteReaderProps) {
                 {note.updated ? "更新 " : ""}
                 {formatDate(note.updated ?? note.date)}
               </time>
-              <span>{note.readingTimeMinutes}分で読めます</span>
             </div>
           </header>
           <div className={`prose ${styles.body}`}>

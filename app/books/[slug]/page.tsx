@@ -5,7 +5,8 @@ import { BookReader } from "@/components/book-reader";
 import { MdxContent } from "@/components/mdx-content";
 import { TableOfContents } from "@/components/toc";
 import { getAllBooks, getBookBySlug } from "@/lib/books";
-import { absoluteUrl, withBasePath } from "@/lib/site";
+import { absoluteUrl } from "@/lib/site";
+import { BookCover } from "@/components/book-cover";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -78,20 +79,16 @@ export default async function BookPage({ params }: PageProps) {
           <span>
             {book.headings.filter((heading) => heading.depth === 2).length}章
           </span>
-          <span>{book.readingTimeMinutes}分で読めます</span>
         </div>
         {book.cover ? (
-          <div className="reader-cover">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={withBasePath(book.cover)}
-              alt=""
-              width={1200}
-              height={675}
-            />
-          </div>
+          <div className="reader-cover"><BookCover book={book} /></div>
         ) : null}
       </header>
+      <section className="book-overview" aria-labelledby="book-outline-heading">
+        <div className="section-heading"><h2 id="book-outline-heading">このブックの構成</h2></div>
+        <p>{book.description}</p>
+        <ol>{book.headings.filter(heading => heading.depth === 2).map((heading, index) => <li key={heading.id}><a href={`#${heading.id}`}><span aria-hidden>{String(index + 1).padStart(2, "0")}</span>{heading.text}</a></li>)}</ol>
+      </section>
       <div className="reading-layout book-page-layout">
         <div className="min-w-0">
           <BookReader chapters={book.headings} title={book.title}>

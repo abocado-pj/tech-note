@@ -3,6 +3,8 @@ import { ArticleCard } from "@/components/article-card";
 import { BookCard } from "@/components/book-card";
 import { SearchPanel } from "@/components/search-panel";
 import { ReadingFormats } from "@/components/reading-formats";
+import { PaperScene } from "@/components/paper-scene";
+import { getAllNotes } from "@/lib/notes";
 import {
   getAllArticles,
   getCategories,
@@ -13,13 +15,17 @@ import { getFeaturedBooks, getBookSearchIndex } from "@/lib/books";
 import { getNoteSearchIndex } from "@/lib/notes";
 
 export default function HomePage() {
-  const articles = getAllArticles().slice(0, 6);
-  const series = getSeries();
+  const allArticles = getAllArticles();
+  const featuredSlugs = ["file-formats/extensions/css", "file-formats/extensions/json", "file-formats/extensions/html"];
+  const articles = featuredSlugs.flatMap(slug => allArticles.filter(article => article.slug === slug));
+  const series = getSeries().sort((a, b) => Number(b.slug === "world-file-extensions") - Number(a.slug === "world-file-extensions"));
   return (
     <div className="page-shell library-home">
       <header className="library-intro">
-        <h1 className="page-heading">技術の記事を探す</h1>
-        <p className="page-subtitle">記事・ブック・ノートを検索できます。</p>
+        <div className="home-hero">
+          <div><h1 className="page-heading">小さな記録から、<br />深い理解へ。</h1><p className="page-subtitle">いま知りたいことを、ちょうどいい深さで。</p></div>
+          <PaperScene />
+        </div>
         <SearchPanel
           compact
           index={[
@@ -28,6 +34,9 @@ export default function HomePage() {
             ...getNoteSearchIndex(),
           ]}
         />
+        <nav className="home-topics" aria-label="技術分野から探す">
+          {getCategories().map(category => <Link key={category.slug} href={`/categories/${category.slug}`}>{category.name}</Link>)}
+        </nav>
       </header>
       <ReadingFormats />
       <div className="library-columns">
@@ -54,6 +63,7 @@ export default function HomePage() {
             <div className="series-list">
               {series.map((item) => (
                 <Link key={item.slug} className="series-link" href={`/series/${item.slug}`}>
+                  <PaperScene subject={item.slug === "world-file-extensions" ? "code" : "layers"} />
                   <strong>{item.name}</strong>
                   <span>{item.subtitle}</span>
                   <span>{item.articles.length}記事 · 記事を選ぶ →</span>
@@ -61,6 +71,7 @@ export default function HomePage() {
               ))}
             </div>
           </section>
+
           <section className="library-section" aria-labelledby="books-heading">
             <div className="section-heading">
               <h2 id="books-heading">ブックで読む</h2>
@@ -71,6 +82,10 @@ export default function HomePage() {
                 <BookCard key={book.slug} book={book} compact />
               ))}
             </div>
+          </section>
+          <section className="library-section" aria-labelledby="notes-heading">
+            <div className="section-heading"><h2 id="notes-heading">短いノート</h2><Link href="/notes">すべてのノート →</Link></div>
+            {getAllNotes().slice(0, 2).map(note => <article className="note-home-row" key={note.slug}><div><h3><Link href={note.url}>{note.title}</Link></h3><p>{note.description}</p></div><Link href={note.url}>ノートを読む →</Link></article>)}
           </section>
         </div>
         <aside className="library-sidebar">

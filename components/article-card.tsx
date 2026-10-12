@@ -17,7 +17,6 @@ export function ArticleCard({
           <Link href={`/categories/${article.categorySlug}`}>
             {article.category}
           </Link>
-          <span>{article.readingTimeMinutes}分</span>
         </div>
         <h2>
           <Link href={article.url}>{article.title}</Link>

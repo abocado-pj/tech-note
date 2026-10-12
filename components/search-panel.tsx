@@ -52,7 +52,7 @@ export function SearchPanel({
           type="search"
           autoComplete="off"
           value={query}
-          placeholder="例：Dart const、Rails トランザクション"
+          placeholder={compact ? "キーワードで探す" : "例：Dart const、Rails トランザクション"}
           onChange={(event) => {
             setQuery(event.target.value);
             setLimit(12);

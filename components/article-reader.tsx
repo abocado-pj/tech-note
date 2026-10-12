@@ -52,7 +52,6 @@ export function ArticleReader({
             {article.updated ? "更新 " : ""}
             {formatDate(article.updated ?? article.date)}
           </time>
-          <span>{article.readingTimeMinutes}分で読めます</span>
         </div>
         {review && !article.thumbnail ? (
           <p className="reader-meta">表紙画像は未反映です。</p>
