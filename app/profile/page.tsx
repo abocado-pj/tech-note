@@ -18,7 +18,7 @@ import { GITHUB_REPO_URL, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Profile",
-  description: "Tech Noteを運営するappar377のポートフォリオと公開学習ログ。",
+  description: "Orifolioを運営するappar377のポートフォリオと公開学習ログ。",
   alternates: {
     canonical: absoluteUrl("/profile"),
   },
@@ -63,7 +63,7 @@ export default function ProfilePage() {
               学習・実装・整理の過程を、そのまま公開資産にする。
             </h2>
             <p className="mt-5 max-w-3xl text-base leading-8 text-zinc-600 dark:text-zinc-400">
-              Tech Noteは、技術記事だけでなく、Book、Series、雑記メモ、読書記録まで含めた公開ポートフォリオです。
+              Orifolioは、技術記事だけでなく、Book、Series、雑記メモ、読書記録まで含めた公開ポートフォリオです。
               ラフな思考をNotesに残し、精査した内容をArticlesへ、さらに目的別にBooksへ育てます。
             </p>
             <div className="mt-6 grid gap-3 sm:grid-cols-3">

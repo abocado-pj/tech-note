@@ -8,7 +8,7 @@ export function SiteFooter() {
       <SiteLogo />
       <nav aria-label="補助ナビゲーション">
         <Link href="/articles">記事</Link>
-        <Link href="/books">ブック</Link>
+        <Link href="/books">本</Link>
         <Link href="/series">シリーズ</Link>
         <Link href="/notes">ノート</Link>
         <Link href="/drafts">下書き</Link>
@@ -18,7 +18,7 @@ export function SiteFooter() {
           GitHub ↗
         </a>
       </nav>
-      <small>Tech Note v2</small>
+      <small>Orifolio · 気づきから、深い理解へ。</small>
     </footer>
   );
 }

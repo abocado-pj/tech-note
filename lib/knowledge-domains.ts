@@ -65,7 +65,7 @@ export const KNOWLEDGE_DOMAINS = [
   {
     name: "Next.js",
     slug: "next-js",
-    description: "App Router、SSG、デプロイなどTech Note運用に必要なNext.js知識。",
+    description: "App Router、SSG、デプロイなどOrifolio運用に必要なNext.js知識。",
   },
 ] as const satisfies KnowledgeDomain[];
 

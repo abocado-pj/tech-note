@@ -7,6 +7,7 @@ import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, absoluteUrl, withBasePath } from
 import "./globals.css";
 import "./reading-ui.css";
 import "./v2-ui.css";
+import "./orifolio.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

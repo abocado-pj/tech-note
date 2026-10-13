@@ -1,6 +1,6 @@
-export const SITE_NAME = "Tech Note";
+export const SITE_NAME = "Orifolio";
 export const SITE_DESCRIPTION =
-  "技術記事、Book、雑記メモ、読書記録を育てるポートフォリオ兼ラーニングライブラリ。";
+  "小さな気づきを残し、しくみを読み、実装へつなぐ。技術のノート・記事・本・シリーズを育てる学びの本棚。";
 export const SITE_URL = "https://appar377.github.io/tech-note";
 export const BASE_PATH = "/tech-note";
 export const GITHUB_REPO_URL = "https://github.com/appar377/tech-note";

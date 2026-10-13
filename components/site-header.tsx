@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 
 const navItems = [
   { href: "/articles", label: "記事" },
-  { href: "/books", label: "ブック" },
+  { href: "/books", label: "本" },
   { href: "/series", label: "シリーズ" },
   { href: "/notes", label: "ノート" },
 ];
@@ -19,15 +19,22 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   return (
-    <header className="reading-header" onKeyDown={event => {
-      if (event.key === "Escape" && menuOpen) {
-        setMenuOpen(false);
-        menuButton.current?.focus();
-      }
-    }}>
+    <header
+      className="reading-header"
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && menuOpen) {
+          setMenuOpen(false);
+          menuButton.current?.focus();
+        }
+      }}
+    >
       <div className="reading-header__inner">
         <SiteLogo />
-        <nav id="main-navigation" aria-label="メインナビゲーション" data-open={menuOpen}>
+        <nav
+          id="main-navigation"
+          aria-label="メインナビゲーション"
+          data-open={menuOpen}
+        >
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -40,11 +47,29 @@ export function SiteHeader() {
           ))}
         </nav>
         <div className="reading-header__actions">
-          <Link href="/search" aria-label="検索"><Search size={22} aria-hidden /></Link>
+          <Link href="/search" aria-label="検索">
+            <Search size={22} aria-hidden />
+          </Link>
           <ThemeToggle />
-          <button ref={menuButton} type="button" className="mobile-menu-toggle" aria-controls="main-navigation" aria-expanded={menuOpen} aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"} onClick={() => setMenuOpen(current => !current)}>
-            {menuOpen ? <X size={24} aria-hidden /> : <Menu size={24} aria-hidden />}
+          <button
+            ref={menuButton}
+            type="button"
+            className="mobile-menu-toggle"
+            aria-controls="main-navigation"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "メニューを閉じる" : "メニューを開く"}
+            onClick={() => setMenuOpen((current) => !current)}
+          >
+            {menuOpen ? (
+              <X size={24} aria-hidden />
+            ) : (
+              <Menu size={24} aria-hidden />
+            )}
           </button>
+        </div>
+        <div className="mobile-theme-controls">
+          <span>表示テーマ</span>
+          <ThemeToggle />
         </div>
       </div>
     </header>

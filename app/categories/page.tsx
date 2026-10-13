@@ -5,7 +5,7 @@ import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Categories",
-  description: "Tech Noteのカテゴリ一覧。",
+  description: "Orifolioのカテゴリ一覧。",
   alternates: {
     canonical: absoluteUrl("/categories"),
   },
