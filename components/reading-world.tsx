@@ -4,9 +4,10 @@ import Link from "next/link";
 import { useId, useRef, useState } from "react";
 import type { ReadingWorld, WorldObject } from "@/lib/worlds";
 import { WorldSpecimen, WorldObjectArt } from "./world-specimen";
+import { FormatsWorkbench } from "./formats-workbench";
 
 export type WorldArticle = { slug: string; title: string; url: string };
-export function ReadingWorldView({ world, articles }: { world: ReadingWorld; articles: WorldArticle[] }) {
+function MechanicalWorld({ world, articles }: { world: ReadingWorld; articles: WorldArticle[] }) {
   const objects = world.groups.flatMap((group) => group.objects);
   const [selectedId, setSelectedId] = useState(world.id === "aws" ? "sqs" : objects.find((item) => item.articles.length)?.id ?? objects[0].id);
   const [query, setQuery] = useState("");
@@ -71,4 +72,8 @@ export function ReadingWorldView({ world, articles }: { world: ReadingWorld; art
       </footer>
     </section>
   );
+}
+
+export function ReadingWorldView(props: { world: ReadingWorld; articles: WorldArticle[] }) {
+  return props.world.id === "formats" ? <FormatsWorkbench {...props} /> : <MechanicalWorld {...props} />;
 }
