@@ -125,7 +125,7 @@ export function getArticleWorld(slug: string): ReadingWorld | undefined {
     : slug.startsWith("aws/") ? "aws"
     : /^(git|github)\//.test(slug) ? "git"
     : /^(sql\/|rails\/sql\/|rails\/data\/db-s3|rails\/data\/s3-db)/.test(slug) ? "database"
-    : slug.startsWith("rails/rspec/") ? "oss"
+    : slug.startsWith("rails/rspec/") || slug === "architecture/execution-model/framework-api-abstraction-leaks" ? "oss"
     : slug === "architecture/auth/authentication-types" ? "network" : undefined;
   return id ? getReadingWorld(id) : undefined;
 }
