@@ -14,6 +14,8 @@ import { getAllNotes } from "@/lib/notes";
 import { getBooksUsingArticle, getNotesForArticle } from "@/lib/reading-relations";
 import { getSeriesBookDefinition } from "@/lib/series-books";
 import { absoluteUrl } from "@/lib/site";
+import { getArticleWorld } from "@/lib/worlds";
+import { WorldReaderIntro } from "@/components/world-reader-intro";
 
 type PageProps = {
   params: Promise<{ slug: string[] }>;
@@ -87,8 +89,10 @@ export default async function ArticlePage({ params }: PageProps) {
     : undefined;
   const books = getBooksUsingArticle(article, getAllBooks());
   const notes = getNotesForArticle(article, getAllNotes());
+  const world = getArticleWorld(article.slug);
   return (
-    <article className="page-shell reader-shell">
+    <article className={`page-shell reader-shell${world ? ` world-reader world-reader--${world.id}` : ""}`}>
+      {world ? <WorldReaderIntro world={world} slug={article.slug} /> : null}
       <ArticleReader article={article} />
       {notes.length ? (
         <section className="reading-context" aria-labelledby="related-notes-heading">

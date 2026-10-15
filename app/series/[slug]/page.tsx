@@ -6,6 +6,8 @@ import { absoluteUrl } from "@/lib/site";
 import { ArticleThumbnail } from "@/components/article-thumbnail";
 import { getSeriesArtwork } from "@/lib/collection-artwork";
 import { ArticleCard } from "@/components/article-card";
+import { ReadingWorldView } from "@/components/reading-world";
+import { getReadingWorld } from "@/lib/worlds";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -40,8 +42,9 @@ export default async function SeriesDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const series = getSeries().find((item) => item.slug === slug);
   if (!series) notFound();
+  const world = slug === "world-file-extensions" ? getReadingWorld("formats") : undefined;
   return (
-    <div className="page-shell narrow-collection">
+    <>{world ? <ReadingWorldView world={world} articles={series.articles.map(({ slug, title, url }) => ({ slug, title, url }))} /> : null}<div className="page-shell narrow-collection">
       <header className="collection-header series-detail-heading">
         <nav className="reader-breadcrumb" aria-label="パンくず">
           <Link href="/series">シリーズ</Link>
@@ -78,6 +81,6 @@ export default async function SeriesDetailPage({ params }: PageProps) {
       <Link className="text-link" href="/books">
         広いテーマを体系的に読むブックへ →
       </Link>
-    </div>
+    </div></>
   );
 }
