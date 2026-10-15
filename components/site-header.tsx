@@ -29,7 +29,7 @@ export function SiteHeader() {
       }}
     >
       <div className="reading-header__inner">
-        <SiteLogo />
+        <SiteLogo placement="header" />
         <nav
           id="main-navigation"
           aria-label="メインナビゲーション"

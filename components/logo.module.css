@@ -1,0 +1,44 @@
+.wordmark {
+  --logo-mark-size: 44px;
+  position: relative;
+}
+
+.footer {
+  --logo-mark-size: 32px;
+}
+
+.text {
+  position: relative;
+  display: inline-block;
+}
+
+.ink {
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background-repeat: no-repeat;
+  background-size: calc(var(--logo-mark-size) * 1600 / 440) var(--logo-mark-size);
+  background-position:
+    calc(0px - var(--logo-mark-size) - 10px)
+    calc((1em - var(--logo-mark-size)) / 2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  pointer-events: none;
+}
+
+.flecks {
+  position: absolute;
+  left: calc(100% + 0.02em);
+  top: calc(50% + 0.25em);
+  width: 0.3em;
+  height: 0.3em;
+  fill: #d7592b;
+  pointer-events: none;
+}
+
+@media (max-width: 680px) {
+  .header {
+    --logo-mark-size: 38px;
+  }
+}

@@ -6,7 +6,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 export function SiteFooter() {
   return (
     <footer className="reading-footer">
-      <SiteLogo />
+      <SiteLogo placement="footer" />
       <nav aria-label="補助ナビゲーション">
         <Link href="/articles">記事</Link>
         <Link href="/books">本</Link>
