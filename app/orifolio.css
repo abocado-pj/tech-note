@@ -1765,3 +1765,14 @@ html.dark .catalog-card--notes .article-row__meta > span {
     background-position: center 20%;
   }
 }
+
+/* The article code surface is dark in both site themes. Select its matching
+   Shiki palette together with the background, including unstyled code. */
+.night-reader-body .code-block pre,
+.night-reader-body .code-block pre code {
+  color: #e6edf6;
+}
+.night-reader-body .code-block pre span[style*="--shiki-dark"] {
+  color: var(--shiki-dark);
+  color: color-mix(in srgb, var(--shiki-dark) 85%, white);
+}
