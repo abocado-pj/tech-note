@@ -30,7 +30,7 @@ npm run test
 npm run build
 ```
 
-`next.config.ts` はGitHub Pages向けに `output: "export"` と `basePath: "/tech-note"` を設定しています。`npm run build` 後、静的ファイルは `out/` に生成されます。
+通常の `npm run build` はGitHub Pages向けに `output: "export"` を使い、静的ファイルを `out/` に生成します。Vercelの `VERCEL=1` 環境ではNext.jsの通常ビルドを使います。どちらも `basePath: "/tech-note"` と既存の本文URLを維持します。
 
 ## Articles
 
@@ -142,3 +142,7 @@ Mermaidは時間順にシーケンス図、分岐にフロー図、関係に依�
 ## Deployment
 
 既存の `.github/workflows/pages.yml` がmainへのpush時にNode22で依存導入・lint・型検査・テスト・静的ビルドを行い、GitHub Pagesへ公開します。公開先は https://appar377.github.io/tech-note/ です。
+
+Vercelへの移行設定と検証手順は [Vercel移行](docs/vercel-migration/README.md) を参照してください。Vercelでは `/` から `/tech-note/` へ転送します。正規URLは検証中も既存のGitHub Pagesを維持します。
+
+コメント機能は未実装です。[コメントDB設計案](docs/comments/README.md) に、投稿者認証、安定したコンテンツID、承認、削除、スパム対策と受入条件をまとめています。
