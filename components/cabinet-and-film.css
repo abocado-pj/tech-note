@@ -490,7 +490,9 @@
     display: block
   }
   .cabinet-heading h1 {
-    display: none
+    display: block;
+    font-size: 28px;
+    margin-bottom: 8px
   }
   .cabinet-heading p {
     font-size: 16px;
