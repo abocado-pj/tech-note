@@ -11,6 +11,7 @@ import {
 import { listMdxFiles, parseMdxSource } from "./mdx-source";
 import { absoluteUrl } from "./site";
 import { normalizeSearchText, slugify } from "./slug";
+import { getNoteArtwork } from "./collection-artwork";
 
 const PROJECT_ROOT = /* turbopackIgnore: true */ process.cwd();
 const NOTES_DIR = path.join(/* turbopackIgnore: true */ PROJECT_ROOT, "notes");
@@ -32,7 +33,9 @@ const noteFrontmatterSchema = z.object({
   tags: z.array(z.string().min(1)).default([]),
   area: z.string().min(1).default("Learning"),
   status: z.enum(["rough", "refined"]).default("rough"),
-  source: z.enum(["ai-dialogue", "manual", "reading", "learning"]).default("manual"),
+  source: z
+    .enum(["ai-dialogue", "manual", "reading", "learning"])
+    .default("manual"),
   draft: z.boolean().default(false),
   thumbnail: z.string().optional(),
   related_article_ids: z.array(z.string().min(1)).default([]),
@@ -98,7 +101,9 @@ export function parseNoteFile(filePath: string): Note {
   const raw = fs.readFileSync(absolutePath, "utf8");
   const parsed = parseMdxSource(raw);
   const frontmatter = noteFrontmatterSchema.parse(parsed.data);
-  const sourcePath = path.relative(PROJECT_ROOT, absolutePath).replaceAll(path.sep, "/");
+  const sourcePath = path
+    .relative(PROJECT_ROOT, absolutePath)
+    .replaceAll(path.sep, "/");
   const slugSegments = path
     .relative(NOTES_DIR, absolutePath)
     .replaceAll(path.sep, "/")
@@ -110,6 +115,7 @@ export function parseNoteFile(filePath: string): Note {
 
   return {
     ...frontmatter,
+    thumbnail: frontmatter.thumbnail ?? getNoteArtwork(slug),
     relatedArticleSlugs: frontmatter.related_article_ids,
     areaSlug: slugify(frontmatter.area),
     slug,
@@ -125,7 +131,10 @@ export function parseNoteFile(filePath: string): Note {
 }
 
 function compareNotesDesc(a: Note, b: Note) {
-  return getSortableDate(b).localeCompare(getSortableDate(a)) || a.title.localeCompare(b.title);
+  return (
+    getSortableDate(b).localeCompare(getSortableDate(a)) ||
+    a.title.localeCompare(b.title)
+  );
 }
 
 function getSortableDate(note: Note) {

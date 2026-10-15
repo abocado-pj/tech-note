@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getSeries } from "@/lib/articles";
 import { absoluteUrl } from "@/lib/site";
-import { PaperScene } from "@/components/paper-scene";
+import { ArticleThumbnail } from "@/components/article-thumbnail";
+import { getSeriesArtwork } from "@/lib/collection-artwork";
 import { ArticleCard } from "@/components/article-card";
 
 type PageProps = {
@@ -49,8 +50,16 @@ export default async function SeriesDetailPage({ params }: PageProps) {
         </nav>
         <h1 className="page-heading">{series.name}</h1>
         <p className="page-subtitle">{series.description}</p>
-        <PaperScene subject={series.slug === "world-file-extensions" ? "code" : "layers"} />
-        <p className="publication-badge">全{series.articles.length}記事 · どの記事からでも</p>
+        <ArticleThumbnail
+          article={{
+            title: series.name,
+            thumbnail: getSeriesArtwork(series.slug),
+          }}
+          framed={false}
+        />
+        <p className="publication-badge">
+          全{series.articles.length}記事 · どの記事からでも
+        </p>
       </header>
       <p className="reader-description">
         共通テーマの独立した記事です。関心のある記事から読めます。

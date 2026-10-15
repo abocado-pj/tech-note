@@ -1,36 +1,24 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { ContentCatalog } from "@/components/content-catalog";
 import { getAllNotes } from "@/lib/notes";
-import { formatDate } from "@/lib/format";
-import { CollectionHero } from "@/components/collection-hero";
 
 export const metadata: Metadata = {
   title: "ノート",
   description: "ひとつの気づきや検討を残した短い読み物。",
 };
-
 export default function NotesPage() {
-  const notes = getAllNotes();
   return (
-    <div className="page-shell narrow-collection">
-      <CollectionHero title="ノート" description="気づいたことを、1ページに。短く気軽な記録を読む。" subject="note" />
-      <div className="article-list">
-        {notes.map((note) => (
-          <article className="article-row" key={note.slug}>
-            <div className="article-row__body">
-              <div className="article-row__meta">
-                <span>{note.area}</span>
-              </div>
-              <h2>
-                <Link href={note.url}>{note.title}</Link>
-              </h2>
-              <p>{note.description}</p>
-              <time dateTime={note.date}>{formatDate(note.date)}</time>
-            </div>
-          </article>
-        ))}
-      </div>
-      {notes.length === 0 ? <p>公開ノートはまだありません。</p> : null}
-    </div>
+    <ContentCatalog
+      kind="notes"
+      items={getAllNotes().map((note) => ({
+        title: note.title,
+        description: note.description,
+        url: note.url,
+        thumbnail: note.thumbnail,
+        category: note.area,
+        date: note.updated ?? note.date,
+        tags: note.tags,
+      }))}
+    />
   );
 }

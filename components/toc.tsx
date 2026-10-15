@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import type { TableOfContentsItem } from "@/lib/articles";
 
 export function TableOfContents({
@@ -5,10 +8,20 @@ export function TableOfContents({
 }: {
   headings: TableOfContentsItem[];
 }) {
+  const details = useRef<HTMLDetailsElement>(null);
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 681px)");
+    const update = () => {
+      if (details.current) details.current.open = media.matches;
+    };
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
   if (!headings.length) return null;
   return (
-    <details className="reader-toc" open>
-      <summary>このページの内容</summary>
+    <details ref={details} className="reader-toc" open>
+      <summary>この記事の目次</summary>
       <nav aria-label="目次">
         <ol>
           {headings.map((heading) => (

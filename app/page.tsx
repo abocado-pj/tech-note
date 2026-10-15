@@ -1,190 +1,131 @@
 import Link from "next/link";
-import { ArticleCard } from "@/components/article-card";
+import { Search } from "lucide-react";
+import { CatalogCard } from "@/components/catalog-item";
 import { ArticleThumbnail } from "@/components/article-thumbnail";
-import { BookCard } from "@/components/book-card";
-import { SearchPanel } from "@/components/search-panel";
-import { ReadingFormats } from "@/components/reading-formats";
-import { FeaturedBooks } from "@/components/featured-books";
+import { NightBookshelf } from "@/components/night-bookshelf";
 import { getAllNotes } from "@/lib/notes";
-import {
-  getAllArticles,
-  getCategories,
-  getSearchIndex,
-  getSeries,
-} from "@/lib/articles";
-import { getFeaturedBooks, getBookSearchIndex } from "@/lib/books";
-import { getNoteSearchIndex } from "@/lib/notes";
+import { getAllArticles } from "@/lib/articles";
+import { getAllBooks } from "@/lib/books";
+import { withBasePath } from "@/lib/site";
 
 export default function HomePage() {
   const allArticles = getAllArticles();
-  const articles = allArticles.slice(0, 3);
-  const featured = allArticles.find(
-    (article) => article.slug === "architecture/auth/authentication-types",
+  const featuredSlugs = [
+    "architecture/auth/authentication-types",
+    "aws/lambda/typescript-handler-and-api-entry",
+  ];
+  const articles = featuredSlugs.flatMap((slug) =>
+    allArticles.filter((article) => article.slug === slug),
   );
-  const relatedFeatures = [
-    "flutter/auth/single-flight-token-refresh-concurrent-401",
-    "flutter/auth/access-token-memory-refresh-token-secure-storage",
-  ].flatMap((slug) => allArticles.filter((article) => article.slug === slug));
-  const series = getSeries().sort(
+  const books = getAllBooks().sort(
     (a, b) =>
-      Number(b.slug === "world-file-extensions") -
-      Number(a.slug === "world-file-extensions"),
+      Number(b.slug === "database-internal") -
+      Number(a.slug === "database-internal"),
   );
   return (
-    <div className="page-shell library-home">
-      <header className="library-intro">
-        <div className="editorial-intro">
+    <div className="page-shell midnight-home">
+      <div className="night-hero home-night-hero">
+        <header className="home-night-intro">
           <div>
-            <p className="eyebrow">IDEAS, OPENED.</p>
-            <h1 className="page-heading">知るほど、見方が変わる。</h1>
-            <p className="page-subtitle">
-              小さな気づきを残し、しくみを読み、実装へつなぐ。
-            </p>
+            <h1>
+              読みたい一冊に、
+              <br />
+              出会う。
+            </h1>
+            <p>しくみを知り、実装へつなぐ。</p>
           </div>
-          <p className="intro-note">
-            いま知りたいことを、
-            <br />
-            ちょうどいい深さで。
-          </p>
-        </div>
-        {featured ? (
-          <div className="editorial-feature">
-            <Link
-              href={featured.url}
-              className="editorial-feature__image"
-              tabIndex={-1}
-              aria-label={`${featured.title}を読む`}
+          <div className="home-search">
+            <form
+              className="night-search"
+              action={withBasePath("/search/")}
+              role="search"
             >
-              <ArticleThumbnail article={featured} priority framed={false} />
-            </Link>
-            <div className="editorial-feature__body">
-              <p className="eyebrow">今日、ひらく問い — 記事</p>
-              <h2>
-                <Link href={featured.url}>{featured.title}</Link>
-              </h2>
-              <p>{featured.description}</p>
-              <Link href={featured.url} className="text-link">
-                記事を読む ↗
-              </Link>
-              <div className="feature-connections">
-                <p>この問いから、実装へ</p>
-                {relatedFeatures.map((article) => (
-                  <Link href={article.url} key={article.slug}>
-                    {article.title}
-                    <span aria-hidden>↗</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-        ) : null}
-        <SearchPanel
-          compact
-          index={[
-            ...getSearchIndex(),
-            ...getBookSearchIndex(),
-            ...getNoteSearchIndex(),
-          ]}
-        />
-        <nav className="home-topics" aria-label="技術分野から探す">
-          {getCategories().map((category) => (
-            <Link key={category.slug} href={`/categories/${category.slug}`}>
-              {category.name}
-            </Link>
-          ))}
-        </nav>
-      </header>
-      <ReadingFormats />
-      <FeaturedBooks />
-      <div className="library-columns">
-        <div className="min-w-0">
-          <section aria-labelledby="recent-heading">
-            <div className="section-heading">
-              <h2 id="recent-heading">記事で、理解を深める。</h2>
-              <Link href="/articles">すべての記事 →</Link>
-            </div>
-            <div className="article-list">
-              {articles.map((article) => (
-                <ArticleCard key={article.slug} article={article} />
-              ))}
-            </div>
-          </section>
-          <section className="library-section" aria-labelledby="series-heading">
-            <div className="section-heading">
-              <h2 id="series-heading">同じテーマを、いろいろな角度から。</h2>
-              <Link href="/series">すべてのシリーズ →</Link>
-            </div>
-            <p className="page-subtitle">
-              共通テーマの独立した記事を、関心のあるものから読む。
-            </p>
-            <div className="series-list">
-              {series.map((item) => (
+              <Search aria-hidden size={25} />
+              <label htmlFor="home-query" className="sr-only">
+                気になる技術やテーマを検索
+              </label>
+              <input
+                id="home-query"
+                type="search"
+                name="q"
+                placeholder="気になる技術やテーマを検索"
+              />
+              <button type="submit" aria-label="検索する">
+                →
+              </button>
+            </form>
+            <nav className="home-topic-chips" aria-label="テーマから検索">
+              {["認証", "Rails", "Flutter", "データベース"].map((topic) => (
                 <Link
-                  key={item.slug}
-                  className="series-link"
-                  href={`/series/${item.slug}`}
+                  key={topic}
+                  href={{ pathname: "/search", query: { q: topic } }}
                 >
-                  {item.articles[0]?.thumbnail ? (
-                    <ArticleThumbnail
-                      article={item.articles[0]}
-                      framed={false}
-                    />
-                  ) : null}
-                  <strong>{item.name}</strong>
-                  <span>{item.subtitle}</span>
-                  <span>{item.articles.length}記事 · 記事を選ぶ →</span>
-                </Link>
-              ))}
-            </div>
-          </section>
-
-          <section className="library-section" aria-labelledby="books-heading">
-            <div className="section-heading">
-              <h2 id="books-heading">公開中の本</h2>
-              <Link href="/books">すべてのブック →</Link>
-            </div>
-            <div className="book-list">
-              {getFeaturedBooks(2).map((book) => (
-                <BookCard key={book.slug} book={book} compact />
-              ))}
-            </div>
-          </section>
-          <section className="library-section" aria-labelledby="notes-heading">
-            <div className="section-heading">
-              <h2 id="notes-heading">短いノート</h2>
-              <Link href="/notes">すべてのノート →</Link>
-            </div>
-            {getAllNotes()
-              .slice(0, 2)
-              .map((note) => (
-                <article className="note-home-row" key={note.slug}>
-                  <div>
-                    <h3>
-                      <Link href={note.url}>{note.title}</Link>
-                    </h3>
-                    <p>{note.description}</p>
-                  </div>
-                  <Link href={note.url}>ノートを読む →</Link>
-                </article>
-              ))}
-          </section>
-        </div>
-        <aside className="library-sidebar">
-          <section>
-            <h2>分野から探す</h2>
-            <nav aria-label="技術分野" className="topic-links">
-              {getCategories().map((category) => (
-                <Link key={category.slug} href={`/categories/${category.slug}`}>
-                  {category.name}
-                  <span aria-hidden>↗</span>
+                  {topic}
                 </Link>
               ))}
             </nav>
-          </section>
-          <Link className="text-link" href="/notes">
-            短いノートを読む →
+          </div>
+        </header>
+        <NightBookshelf
+          books={books.map((book) => ({
+            title: book.title,
+            subtitle: book.subtitle,
+            slug: book.slug,
+            url: book.url,
+            headings: book.headings
+              .filter((heading) => heading.depth === 2)
+              .map(({ id, text }) => ({ id, text })),
+          }))}
+        />
+      </div>
+      <div className="home-reading-columns">
+        <section>
+          <div className="section-heading">
+            <h2>記事から探す</h2>
+            <Link href="/articles">すべての記事を見る　→</Link>
+          </div>
+          {articles.map((article) => (
+            <CatalogCard
+              key={article.slug}
+              item={{
+                title: article.title,
+                description: article.description,
+                url: article.url,
+                thumbnail: article.thumbnail,
+                category: article.category,
+                date: article.date,
+                tags: article.tags,
+              }}
+            />
+          ))}
+        </section>
+        <section>
+          <div className="section-heading">
+            <h2>小さなノート</h2>
+            <Link href="/notes">すべてのノートを見る　→</Link>
+          </div>
+          {getAllNotes()
+            .slice(0, 2)
+            .map((note) => (
+              <article className="home-note-row" key={note.slug}>
+                <Link href={note.url} tabIndex={-1} aria-hidden>
+                  <ArticleThumbnail article={note} framed={false} />
+                </Link>
+                <div>
+                  <h3>
+                    <Link href={note.url}>{note.title}</Link>
+                  </h3>
+                  <p>{note.description}</p>
+                  <time dateTime={note.date}>
+                    {note.date.replaceAll("-", ".")}
+                  </time>
+                </div>
+              </article>
+            ))}
+          <Link className="home-series-link" href="/series">
+            シリーズをたどる　→
           </Link>
-        </aside>
+        </section>
       </div>
     </div>
   );

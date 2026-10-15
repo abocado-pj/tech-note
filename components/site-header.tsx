@@ -8,8 +8,8 @@ import { Menu, Search, X } from "lucide-react";
 import { useRef, useState } from "react";
 
 const navItems = [
+  { href: "/", label: "本棚" },
   { href: "/articles", label: "記事" },
-  { href: "/books", label: "本" },
   { href: "/series", label: "シリーズ" },
   { href: "/notes", label: "ノート" },
 ];
@@ -39,7 +39,15 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              aria-current={pathname.startsWith(item.href) ? "page" : undefined}
+              aria-current={
+                (
+                  item.href === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(item.href)
+                )
+                  ? "page"
+                  : undefined
+              }
               onClick={() => setMenuOpen(false)}
             >
               {item.label}
@@ -50,7 +58,6 @@ export function SiteHeader() {
           <Link href="/search" aria-label="検索">
             <Search size={22} aria-hidden />
           </Link>
-          <ThemeToggle />
           <button
             ref={menuButton}
             type="button"

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { GITHUB_REPO_URL } from "@/lib/site";
 import { SiteLogo } from "@/components/logo";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function SiteFooter() {
   return (
@@ -19,6 +20,7 @@ export function SiteFooter() {
         </a>
       </nav>
       <small>Orifolio · 気づきから、深い理解へ。</small>
+      <ThemeToggle />
     </footer>
   );
 }
