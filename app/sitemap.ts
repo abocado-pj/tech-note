@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
-import { getAllArticles, getCategories, getTags } from "@/lib/articles";
+import { getAllArticles, getCategories, getTags, getSeries } from "@/lib/articles";
 import { getAllBooks } from "@/lib/books";
 import { getAllNotes } from "@/lib/notes";
 import { absoluteUrl } from "@/lib/site";
+import { READING_WORLDS } from "@/lib/worlds";
 
 export const dynamic = "force-static";
 
@@ -60,5 +61,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.4,
   }));
 
-  return [...staticPages, ...books, ...articles, ...notes, ...categories, ...tags];
+  const exhibitions = READING_WORLDS.filter((world) => world.id !== "formats").map((world) => ({ url: absoluteUrl(`/worlds/${world.id}`), changeFrequency: "monthly" as const, priority: 0.6 }));
+  const series = getSeries().map((item) => ({ url: absoluteUrl(`/series/${item.slug}`), changeFrequency: "monthly" as const, priority: 0.7 }));
+  return [...staticPages, ...books, ...articles, ...notes, ...categories, ...tags, ...series, ...exhibitions];
 }

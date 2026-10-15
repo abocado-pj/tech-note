@@ -3,6 +3,7 @@ import { ContentCatalog } from "@/components/content-catalog";
 import { getSeries } from "@/lib/articles";
 import { getSeriesArtwork } from "@/lib/collection-artwork";
 import { SERIES_DESCRIPTION } from "@/lib/reading-formats";
+import { WorldDirectory } from "@/components/world-directory";
 
 export const metadata: Metadata = {
   title: "シリーズ",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 };
 export default function SeriesPage() {
   return (
-    <ContentCatalog
+    <><WorldDirectory /><ContentCatalog
       kind="series"
       items={getSeries().map((series) => ({
         title: series.name,
@@ -27,6 +28,6 @@ export default function SeriesPage() {
           "",
         ),
       }))}
-    />
+    /></>
   );
 }

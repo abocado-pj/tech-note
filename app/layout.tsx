@@ -8,6 +8,7 @@ import "./globals.css";
 import "./reading-ui.css";
 import "./v2-ui.css";
 import "./orifolio.css";
+import "./worlds.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

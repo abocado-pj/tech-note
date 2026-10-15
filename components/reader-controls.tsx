@@ -19,7 +19,7 @@ export function ReaderControls() {
           const contents = document.querySelector("#article-contents details");
           if (contents instanceof HTMLDetailsElement) {
             contents.open = true;
-            contents.scrollIntoView({ block: "start", behavior: "smooth" });
+            contents.scrollIntoView({ block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
             contents.querySelector("summary")?.focus();
           }
         }}
