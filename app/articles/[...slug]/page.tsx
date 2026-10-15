@@ -15,7 +15,7 @@ import { getBooksUsingArticle, getNotesForArticle } from "@/lib/reading-relation
 import { getSeriesBookDefinition } from "@/lib/series-books";
 import { absoluteUrl } from "@/lib/site";
 import { getArticleWorld } from "@/lib/worlds";
-import { WorldReaderIntro } from "@/components/world-reader-intro";
+import { WorldArticleReader } from "@/components/world-article-reader";
 
 type PageProps = {
   params: Promise<{ slug: string[] }>;
@@ -90,10 +90,10 @@ export default async function ArticlePage({ params }: PageProps) {
   const books = getBooksUsingArticle(article, getAllBooks());
   const notes = getNotesForArticle(article, getAllNotes());
   const world = getArticleWorld(article.slug);
+  const nextWorldArticle = world ? (adjacent.next && getArticleWorld(adjacent.next.slug)?.id === world.id ? adjacent.next : getAllArticles().find((item) => item.slug !== article.slug && getArticleWorld(item.slug)?.id === world.id)) : undefined;
   return (
     <article className={`page-shell reader-shell${world ? ` world-reader world-reader--${world.id}` : ""}`}>
-      {world ? <WorldReaderIntro world={world} slug={article.slug} /> : null}
-      <ArticleReader article={article} />
+      {world ? <WorldArticleReader article={article} world={world} nextArticle={nextWorldArticle} /> : <ArticleReader article={article} />}
       {notes.length ? (
         <section className="reading-context" aria-labelledby="related-notes-heading">
           <h2 id="related-notes-heading">関連する短いノート</h2>

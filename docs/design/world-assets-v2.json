@@ -1,0 +1,204 @@
+{
+  "tool": "builtin image_gen.imagegen",
+  "original_references": "Library IDs in docs/releases/v2.3.0-rc.1.md; all ten inspected",
+  "workbench_prompts_note": "The initial workbench generation used reference03: clean room/desk/mat without any UI or foreground selectable tools, then seven separate transparent cutouts matching the reference camera and warm light (JPEG photo, PNG flower print, SVG leaf+pen, blank JSON/YAML tablet, XLSX workbook, CSV sheets, ZIP pouch). This is a summary; exact per-image prompts were in the task execution log.",
+  "prompts": [
+    {
+      "generated_file": "exec-5fc599c5-2f3b-483a-88bd-53a9c6e07212.png",
+      "prompt": "Recreate ONLY the empty workshop environment plate from this approved UI reference, matching the exact camera perspective, warm cream light, cream blueprint paper worktop with fine technical linework, brass magnifying glass lower left, tweezers at bottom, blue handle precision screwdriver lower right, and soft blurred distant tools. REMOVE the ENTIRE giant exploded mechanical machine row, all five selectable mechanical modules, ALL hanging tags, ALL captions, all logo/navigation/footer/UI, all readable writing. Where the machine was leave uninterrupted empty blueprint worktop and soft beige workshop wall. Keep environment perspective and scale exactly like source. Full bleed 1536x1024. This is an environment artwork asset, NO interface screenshot, NO typography, NO buttons.",
+      "reference": "04",
+      "mode": "edit approved reference / dedicated artwork; builtin image_gen"
+    },
+    {
+      "generated_file": "exec-59a8fddd-ea10-4ed6-87aa-792d014753fa.png",
+      "prompt": "Create a transparent-background foreground asset: ONLY the giant exploded silver/brass/blue mechanical machine from the approved reference, no environment, paper, table, labels, hanging tag, UI, writing, logo. Maintain exact photorealistic warm side lighting, camera and continuous exploded mechanical silhouette from the reference. Arrange FIVE clearly separate assemblies in one horizontal row, with generous transparent gaps at x 20%,40%,60%,80% so each can be independently cut into a vertical fifth without slicing neighboring parts. Assemblies left to right: 1 silver camera-like entrance housing with brass aperture, 2 BLUE dense finned parser stack, 3 exposed silver and brass gearbox with intermeshing gears, 4 tall silver test module with four softly glowing check marks but NO writing, 5 blue dependency end cap with three brass circular network discs and blue wires. Five assemblies have comparable footprint, occupy each fifth without crossing the dividing lines, feet at same baseline. No loose tools. Genuine transparent alpha around every silhouette and gap. No background, floor, checkerboard, mockup, collage, frame, labels or text. Whole row fills width with breathing room.",
+      "reference": "04",
+      "mode": "edit approved reference / dedicated artwork; builtin image_gen"
+    },
+    {
+      "generated_file": "exec-c4e3ffa9-30e9-4e76-9b71-06f441e834f1.png",
+      "prompt": "Create the empty environment plate matching this approved reference exactly: close frontal dark walnut vintage communications console, warmly lit, five empty cream/brass mounting panels across top middle, bottom dense physical switchboard with brass sockets, large teal turning knob, red lights and braided teal and red cables, dark bound books lower left, paper lower right. REMOVE five primary mechanisms (rotary DNS dial, HTTP paper-roll machine, TLS glass lock, TCP twin meters, CDN drawer rack) from the five panels leaving clean softly worn cream mounting surfaces. Remove ALL text, all plaques, logo, navigation, captions, button labels and all readable writing. Preserve continuous wood housing, brass panel divisions, lower cables and desk, source camera/perspective. Full bleed 1536x1024. Background environment asset, not UI screenshot. No active mechanisms left in the five panels.",
+      "reference": "08",
+      "mode": "edit approved reference / dedicated artwork; builtin image_gen"
+    },
+    {
+      "generated_file": "exec-6f0e9dd6-9184-4c1e-8bc2-123042b886f3.png",
+      "prompt": "Create only FIVE independent foreground mechanisms from reference on genuine TRANSPARENT background, no console/background/desk/cables outside items, no text, captions, labels, navigation/UI. Photorealistic brass/walnut vintage communications devices with warm light, exact frontal perspective. Arrange five equal-width vertical columns left to right with transparent gaps at 20/40/60/80% width: 1 large brass rotary telephone DNS dial with teal handle; 2 brass paper roll mechanism and large blank cream scroll held between rollers; 3 glowing brass padlock inside glass vacuum dome; 4 two side-by-side black and brass analog meters with blank cream faces and red pointers and simple tickmarks, NO numerals or words; 5 rack of five small dark walnut drawers with blank brass label holders and red indicator lights. Each item fully contained within its fifth; generous transparent margins, no parts crossing column boundaries. Same top baseline and similar height, isolated natural silhouettes. NO checkerboard, no floor, no labels or writing.",
+      "reference": "08",
+      "mode": "edit approved reference / dedicated artwork; builtin image_gen"
+    },
+    {
+      "generated_file": "exec-78d4ddc2-05cb-4a59-8e8e-6c74a902b7b0.png",
+      "prompt": "Recreate the vast underground cavern environment plate of this approved reference, same intricately engraved painterly photoreal style, teal blue rock darkness, brass warm glowing windows, pale paper sky top, distant tiny underground city, bridges across the void, waterfalls. Remove ALL UI, text, logo, labels, callout, minimap, controls. Remove four primary foreground facilities: giant round library rotunda on left top, branching tree-index building upper middle-right, grand transaction arch hall middle left, and long query elevator tower right. Replace them with appropriately empty dark cavern recesses, maintain surrounding rock and bridges and vertical scale. Full bleed 1536x1024. No typography, no UI, no foreground buildings occupying those four spaces. Environment artwork only.",
+      "reference": "10",
+      "mode": "edit approved reference / dedicated artwork; builtin image_gen"
+    },
+    {
+      "generated_file": "exec-9edf45ec-45e4-4f6f-802e-9da3fd369822.png",
+      "prompt": "Create FOUR separate highly detailed fantasy underground architectural facility assets from the approved reference on genuine TRANSPARENT background, no environment, UI, text, logo, labels, rock rectangles. The exact engraved painterly photoreal art style, dark teal stone and brass warm lit windows. Arrange a 2 by 2 atlas with generous transparent gutters; each quadrant independently isolated and wholly contained, no neighboring fragments. TOP LEFT: huge round glass library rotunda packed with bookshelves, brass ribs, broad balconies, front three-quarter view. TOP RIGHT: organic branching tree-like network of glowing windowed rooms carved in rock, thin winding bridges. BOTTOM LEFT: grand vaulted transaction hall with ornate double bronze doors and columns, circular foreground landing. BOTTOM RIGHT: exceptionally tall slender brass/glass elevator shaft tower, with lit spherical elevator cabin, keep full tower visible in this quadrant. Natural irregular architectural silhouettes, transparent edges, no flat background. Warm amber lights, same perspective as reference. No text, badges, callout, mini-map, chart, buttons or floor rectangle.",
+      "reference": "10",
+      "mode": "edit approved reference / dedicated artwork; builtin image_gen"
+    },
+    {
+      "generated_file": "exec-2c45bfaf-3098-4c49-938b-eccf1f2646d0.png",
+      "prompt": "Extract and recreate ONLY the EMPTY black/brass museum mechanical cabinet environment from the approved reference. Same frontal camera, warm amber overhead point lights, rich antique brass upright divisions and feet, black patterned metal back panel, reflective dark stone floor. Six vertical cabinet columns occupying the left 80% of the canvas; dark empty area at right 20% for an HTML detail panel. REMOVE ALL service mechanisms, name plaques, lettering, headers, UI, logo, search, ALL symbols, devices, drawers, gears. Leave six empty continuous black-lined cabinet columns, brass rails/dividers and softly illuminated compartment shelves, approximately five rows each. This is an empty environment plate, NOT a UI screenshot. Keep top 15% dark wall for title, floor bottom 10%, actual cabinet from15%to90%. Full bleed1536x1024.",
+      "reference": "06",
+      "mode": "edit approved reference / dedicated artwork; builtin image_gen"
+    },
+    {
+      "generated_file": "exec-971d87e6-2d51-46ea-858f-2b722e131d2d.png",
+      "prompt": "Generate a TRANSPARENT atlas of exactly30 separate antique brass/black/blue/orange mechanical miniatures arranged in a STRICT6-column by5-row uniform grid, every cell isolated with generous transparent padding, no items crossing cell boundaries. Same frontal photoreal warm museum light as approved reference. NO environment, cabinet, shelves, labels, plaques, text, writing, badges or UI. Each miniature is an intricate recognizable tangible mechanism. Row1 cells: glowing orange piston engine; orange container cargo cart; brass ship steering wheel; blue electrical glass tube; glass globe. Row2: wood card drawers; spinning silver disk; blank paper spool; paired blue liquid tanks; orange cylinder. Row3: brass filing cabinet; blue glass memory tubes; blue wired network board; radial brass selector wheel; metal fan. Row4: pressure pipe manifold; brass gate; rack of hanging brass keys; blank ID-card mechanical reader; round brass vault. Row5: glowing safe; orange conveyor carrying plain white envelopes; twin brass megaphone speakers; radial event-router; clockwork sequence drums; waveform oscilloscope. Grid order and cell count EXACT. Genuine transparent background and gaps, every miniature complete natural silhouette, no checkerboard. 1536x1024. Visual learning metaphors only. The separate service nameplates will be HTML, so NO TEXT ANYWHERE.",
+      "reference": "06",
+      "mode": "edit approved reference / dedicated artwork; builtin image_gen"
+    },
+    {
+      "generated_file": "exec-72bc32d4-c6e3-4a24-9bfb-8298248b780e.png",
+      "prompt": "Recreate this approved cinematic vintage film editing room as a CLEAN ENVIRONMENT ART plate, same exact camera, warm brass projector on left with big reel and light beam, burgundy curtains, huge blank dark projection screen upper center, tall blue reel machine upper right and second brass reel on far right, polished dark walnut editing table, scattered blank paper and small film reels at corners. REMOVE ALL foreground film strips spanning the table (leave empty table), ALL nameplates, ALL cards and callouts, ALL words, ALL UI controls and labels/navigation/logo/footer. Remove the entire lower playback button console leaving table. Projection screen must be empty softly lit dark teal, no photos or typography. Keep decorative projector and reels, which are environment only. Full bleed1536x1024, warm glowing coherent space, not a UI screenshot.",
+      "reference": "09",
+      "mode": "edit approved reference / dedicated artwork; builtin image_gen"
+    },
+    {
+      "generated_file": "exec-629d1e58-6158-4b33-b64c-6ee160b732e8.png",
+      "prompt": "Create a clean photographic two-frame illustration asset based on the exact pair of small houses projected in this approved reference. Only two equally sized side-by-side pictures separated by a slim dark divider: LEFT same modest modern white house in blue gray daylight, a small tree on left, unlit windows, RIGHT same house same camera position golden sunset, warm lit window and autumn tree. No film border, no text, no writing, no UI, no logos, no labels, no reels, no background room. Both images fit edge to edge in a 2:1 landscape canvas, identical house geometry and camera, subtle photographic grain from projection. This is illustrative artwork for comparing a change, not a claim about real software.",
+      "reference": "09",
+      "mode": "edit approved reference / dedicated artwork; builtin image_gen"
+    },
+    {
+      "generated_file": "exec-a21e8bd4-7151-40f0-8fa7-cc35d6b8ce14.png",
+      "prompt": "Extract a dedicated physical miniature asset based on this approved AWS museum cabinet reference. A single compact HORIZONTAL glowing BLUE glass cylinder machine with five brass rings and silver end caps, matching the Aurora blue cylinder in the approved reference. Do not use orange, a piston engine, key or safe. One complete isolated object centered, front camera, intricate black/brass mechanical construction, warm amber light. GENUINE TRANSPARENT BACKGROUND, generous transparent margin on all sides. NO environment, cabinet, shelf, floor or rectangle, no plaque, no label, no readable text, no letter, no UI, no neighboring objects, no checkerboard. Photorealistic asset matching reference materials and camera, not a UI screenshot.",
+      "reference": "06",
+      "mode": "edit approved reference / dedicated artwork; builtin image_gen"
+    },
+    {
+      "generated_file": "exec-1cc2ea18-bc04-40c2-9393-0931086e8dd8.png",
+      "prompt": "Extract a dedicated physical miniature asset based on this approved AWS museum cabinet reference. A single antique brass audit-recording printer with two small side rollers and a long cream perforated paper scroll trailing down, covered ONLY faint illegible short tally marks, no words/numerals. Match CloudTrail paper-recording machine from reference. Distinct from a simple storage spool. One complete isolated object centered, front camera, intricate black/brass mechanical construction, warm amber light. GENUINE TRANSPARENT BACKGROUND, generous transparent margin on all sides. NO environment, cabinet, shelf, floor or rectangle, no plaque, no label, no readable text, no letter, no UI, no neighboring objects, no checkerboard. Photorealistic asset matching reference materials and camera, not a UI screenshot.",
+      "reference": "06",
+      "mode": "edit approved reference / dedicated artwork; builtin image_gen"
+    },
+    {
+      "generated_file": "exec-de54c5c2-928b-4255-909a-bd8df4402e85.png",
+      "prompt": "Extract a dedicated physical miniature asset based on this approved AWS museum cabinet reference. A single round brass radar telescope instrument with deep blue glass circular face, fine crosshair and luminous tiny blue dots, short brass pedestal, matching Athena round blue radar in approved reference. No vault wheel or steering wheel. One complete isolated object centered, front camera, intricate black/brass mechanical construction, warm amber light. GENUINE TRANSPARENT BACKGROUND, generous transparent margin on all sides. NO environment, cabinet, shelf, floor or rectangle, no plaque, no label, no readable text, no letter, no UI, no neighboring objects, no checkerboard. Photorealistic asset matching reference materials and camera, not a UI screenshot.",
+      "reference": "06",
+      "mode": "edit approved reference / dedicated artwork; builtin image_gen"
+    },
+    {
+      "generated_file": "exec-44b97c47-eb2b-464c-9885-088d8b699f7a.png",
+      "prompt": "Extract and recreate ONLY the blue exploded machine illustration in the top-right header of this approved OSS article design. A broad horizontal exploded assembly in three-quarter isometric view: large steel blue metal cube housing on left, several blue/silver/brass internal square plates and gears floating in sequence toward right, small brass screws hovering around, thin hand-drafted blue construction lines. Match the source's fine engraved watercolor engineering illustration style, cream highlights and navy outlines. Genuine TRANSPARENT background. No paper rectangle or grid background, no interface screenshot, no labels, no letters, no numbers, no parser names, no UI, no captions, no title, no code, no article. One isolated horizontal illustration, fill canvas width with generous transparent margin, 1536x1024. This is a metaphorical decorative mechanical assembly for a technical reading notebook; HTML supplies real article title and explanation.",
+      "reference": "05",
+      "mode": "edit approved reference / dedicated artwork; builtin image_gen"
+    }
+  ],
+  "delivery_format": "WebP quality88 alphaQuality100; no resizing, same alpha and dimensions; originals retained in task generated_images",
+  "assets": [
+    {
+      "path": "public/images/worlds/aws-athena-v2.webp",
+      "bytes": 315726,
+      "sha256": "796a02a168a46c0d6937dc9da2041b915debc6b01395724213ea663430cac85f"
+    },
+    {
+      "path": "public/images/worlds/aws-aurora-v2.webp",
+      "bytes": 301078,
+      "sha256": "29b26874dc43efe579e41e5027cb563d25984b7bbf37d2e0bea2dcb3aa11a4d2"
+    },
+    {
+      "path": "public/images/worlds/aws-cloudtrail-v2.webp",
+      "bytes": 235346,
+      "sha256": "ed94d873c13fcc3ac3c27245b4c01ec15de21021dfff862b862f381e786178ac"
+    },
+    {
+      "path": "public/images/worlds/aws-environment-v2.webp",
+      "bytes": 195986,
+      "sha256": "162fab9e7207b3b3d55b352ed099343dab86125a42475f77fa1f1bda4ec2c08d"
+    },
+    {
+      "path": "public/images/worlds/aws-parts-v2.webp",
+      "bytes": 618796,
+      "sha256": "b153b66138ae81f1d980bc1c1982f4d782993ac031f53f54fc1bc8a91bf192c1"
+    },
+    {
+      "path": "public/images/worlds/database-environment-v2.webp",
+      "bytes": 500002,
+      "sha256": "c5b201de2bbc5ac0c53706e155a737e9edffde2608a31bd0934607106be931c9"
+    },
+    {
+      "path": "public/images/worlds/database-parts-v2.webp",
+      "bytes": 566938,
+      "sha256": "ca109bb64ea13f4cb5ed4e2cdda19019fa2146e2865ccfc499654be8163a7178"
+    },
+    {
+      "path": "public/images/worlds/desk-csv-v2.webp",
+      "bytes": 121122,
+      "sha256": "6cc0b18c0caa107b7cb66c6c86a074a54f29e2a4d8ec30781257d745857c0d90"
+    },
+    {
+      "path": "public/images/worlds/desk-jpeg-v2.webp",
+      "bytes": 198478,
+      "sha256": "bf24d90b59cc7b2b457987d044faa3efe2cd7da8bcad8bba4f5dd52ae0950cef"
+    },
+    {
+      "path": "public/images/worlds/desk-png-v2.webp",
+      "bytes": 206750,
+      "sha256": "5040988fa2669251687ee2e9bfb6a49d99d514009dea6c12651bbef67ab33fa0"
+    },
+    {
+      "path": "public/images/worlds/desk-svg-v2.webp",
+      "bytes": 154662,
+      "sha256": "62cf9482948cab51a5c1773cca4ab912178cce65d7eb802619dd287a2a73bcb1"
+    },
+    {
+      "path": "public/images/worlds/desk-tablet-v2.webp",
+      "bytes": 99048,
+      "sha256": "390d6a16afe4263b10885d1a934592d7934b1c4fdd26ffa9ba4d628e5aabbc36"
+    },
+    {
+      "path": "public/images/worlds/desk-xlsx-v2.webp",
+      "bytes": 165312,
+      "sha256": "ef4f3ef5f33ce60815ea032724d53caab7b536cde5be9a88c44e368dd043e529"
+    },
+    {
+      "path": "public/images/worlds/desk-zip-v2.webp",
+      "bytes": 432872,
+      "sha256": "cfcd21be11e35f2fdf2e503f46020c3d9dd05afa98993a5cd7c9a7e094c544a2"
+    },
+    {
+      "path": "public/images/worlds/formats-room-v2.webp",
+      "bytes": 235648,
+      "sha256": "a83e8913589b368049d8b2a63076833f3e4dd9bda609153e4c5ae4e306261447"
+    },
+    {
+      "path": "public/images/worlds/git-environment-v2.webp",
+      "bytes": 221274,
+      "sha256": "647d9338b1d1f0f592516df091013d89b2eb66de36943b5b3c7cb2f6c856125e"
+    },
+    {
+      "path": "public/images/worlds/git-film-frames-v2.webp",
+      "bytes": 394288,
+      "sha256": "247300fff9e7bfab37d57d5ae9e5aeb737a81e8f99f63e17172bce0674bfc9f6"
+    },
+    {
+      "path": "public/images/worlds/network-environment-v2.webp",
+      "bytes": 245902,
+      "sha256": "5b818f835092ec62472fec55d67243748ee3824c626a38e956e82a810b2c4ce2"
+    },
+    {
+      "path": "public/images/worlds/network-parts-v2.webp",
+      "bytes": 336600,
+      "sha256": "a58dfa7cef34106e26fd9707fa2724c86920ae5f54474a111406e402fb65e020"
+    },
+    {
+      "path": "public/images/worlds/oss-environment-v2.webp",
+      "bytes": 187326,
+      "sha256": "44256db7608ef35c99c5c8132198fc199575c6e500ba6501a9ca58dd157857f5"
+    },
+    {
+      "path": "public/images/worlds/oss-parts-v2.webp",
+      "bytes": 462234,
+      "sha256": "1180d5d40b3e2f14291e6e061db5de6297dd8a9a3659ef6f619d74667dd0ea7a"
+    },
+    {
+      "path": "public/images/worlds/oss-reader-hero-v2.webp",
+      "bytes": 316672,
+      "sha256": "0c88b725dd7ad13e2976634eda5f5e4cf09408dfc01e9f41f1396e88f6a5f254"
+    }
+  ]
+}

@@ -22,7 +22,7 @@ const objectCrops: Record<ObjectArtId, string> = {
 
 function DeskObjectArt({ id }: { id: ObjectArtId }) {
   return <svg className="desk-object-art" viewBox={objectCrops[id]} aria-hidden="true" focusable="false">
-    <image href={withBasePath(`/images/worlds/desk-${id}-v2.png`)} width={id === "svg" ? "1430" : "1536"} height={id === "svg" ? "1100" : "1024"} />
+    <image href={withBasePath(`/images/worlds/desk-${id}-v2.webp`)} width={id === "svg" ? "1430" : "1536"} height={id === "svg" ? "1100" : "1024"} />
   </svg>;
 }
 
@@ -37,7 +37,7 @@ export function FormatsWorkbench({ world, articles }: { world: ReadingWorld; art
 
   function select(item: WorldObject) {
     setSelectedId(item.id);
-    if (window.matchMedia("(max-width: 760px)").matches) detail.current?.scrollIntoView({ block: "nearest", behavior: "instant" });
+    if (window.matchMedia("(max-width: 900px)").matches) detail.current?.scrollIntoView({ block: "nearest", behavior: "instant" });
   }
 
   function selectionProps(item: WorldObject) {

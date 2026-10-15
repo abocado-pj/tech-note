@@ -2634,3 +2634,9 @@ body>main:has(>.reading-world),body>main:has(>.newspaper-wrap) {
     padding: 8px 10px;
   }
 }
+.directory-scene-art{height:190px;padding:12px;background:radial-gradient(at 40% 35%,#eee3c9,#b49c78)}
+.directory-scene-art>svg,.directory-scene-art>.reader-film-art{width:100%;height:100%;filter:drop-shadow(3px 7px 5px #34241355)}
+.directory--aws .directory-scene-art{background:radial-gradient(at 40% 35%,#423015,#0c1215)}
+.directory--network .directory-scene-art{background:linear-gradient(135deg,#906344,#46301f)}
+.directory--database .directory-scene-art{background:radial-gradient(at 40% 35%,#2e5460,#071f2b)}
+.directory--git .directory-scene-art{background:#17151a;padding:25px}
