@@ -51,7 +51,7 @@ export default async function SeriesDetailPage({ params }: PageProps) {
           <span aria-hidden>/</span>
           <span>{series.category}</span>
         </nav>
-        <h1 className="page-heading">{series.name}</h1>
+        {world ? <h2 className="page-heading">{series.name}</h2> : <h1 className="page-heading">{series.name}</h1>}
         <p className="page-subtitle">{series.description}</p>
         <ArticleThumbnail
           article={{

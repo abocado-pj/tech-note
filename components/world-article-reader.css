@@ -580,3 +580,14 @@ body>main:has(>.world-reader) {
 }
 .process-mechanism>.process-neutral-icon{width:76px;height:76px;margin:12px auto;color:#8d662a;filter:drop-shadow(1px 2px 1px #7b521a22)}
 @media(max-width:760px){.process-mechanism>.process-neutral-icon{width:54px;height:54px;margin:8px auto}}
+/* These code panels always use a dark surface, including the light paper theme. */
+.world-document .code-block pre,
+.world-document .code-block pre code {
+  color: #e6edf3;
+}
+.world-document .code-block pre span[style*="--shiki-dark"],
+html.dark .world-document .code-block pre span[style*="--shiki-dark"] {
+  color: #e6edf3;
+  color: color-mix(in srgb, var(--shiki-dark) 75%, white);
+}
+.world-document .code-copy-button{color:#f4dba3;background:#21394b;border-color:#9b7b4366}
