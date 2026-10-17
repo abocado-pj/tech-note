@@ -4,6 +4,7 @@ import { getSeries } from "@/lib/articles";
 import { getSeriesArtwork } from "@/lib/collection-artwork";
 import { SERIES_DESCRIPTION } from "@/lib/reading-formats";
 import { WorldDirectory } from "@/components/world-directory";
+import { LAMBDA_SERIES_SLUG } from "@/lib/lambda-inspection";
 
 export const metadata: Metadata = {
   title: "シリーズ",
@@ -19,6 +20,7 @@ export default function SeriesPage() {
         url: `/series/${series.slug}`,
         category: series.category,
         thumbnail: getSeriesArtwork(series.slug),
+        artwork: series.slug === LAMBDA_SERIES_SLUG ? "lambda-inspection" as const : undefined,
         articleCount: series.articles.length,
         tags: [
           ...new Set(series.articles.flatMap((article) => article.tags)),

@@ -8,7 +8,8 @@ import { SceneObjectArt } from "./exhibit-scene";
 import { CabinetMechanism } from "./cabinet-and-film";
 import { withBasePath } from "@/lib/site";
 import { formatDate } from "@/lib/format";
-import type { Article } from "@/lib/articles";
+import type { Article, SeriesItem } from "@/lib/articles";
+import { SeriesArticleContents } from "./series-article-contents";
 import type { ReadingWorld } from "@/lib/worlds";
 import "./world-article-reader.css";
 
@@ -43,25 +44,26 @@ function ReaderMechanism({ world, slug }: { world: ReadingWorld; slug: string })
   return <img src={withBasePath(`/images/worlds/desk-${asset}-v2.webp`)} width="1536" height="1024" alt="" />;
 }
 
-export function WorldArticleReader({ article, world, nextArticle }: { article: Article; world: ReadingWorld; nextArticle?: Pick<Article,"url"|"title"|"slug"> }) {
+export function WorldArticleReader({ article, world, nextArticle, series }: { article: Article; world: ReadingWorld; nextArticle?: Pick<Article,"url"|"title"|"slug">; series?: SeriesItem }) {
   const guide = guides[article.slug];
-  const worldUrl = world.id === "formats" ? "/series/world-file-extensions" : `/worlds/${world.id}`;
+  const worldUrl = series ? `/series/${series.slug}` : world.id === "formats" ? "/series/world-file-extensions" : `/worlds/${world.id}`;
+  const returnLabel = series?.name ?? world.title;
   return <>
     <WorldToolbar title={world.title} article />
     <div className="world-document">
       <header className="world-document-heading">
-        <div className="world-document-title"><Link href={worldUrl}>← {world.title}に戻る</Link><p className="world-document-kicker">{article.category} / FIELD NOTES</p><h1>{article.title}</h1><p>{article.description}</p><div className="world-document-meta"><time dateTime={article.updated ?? article.date}>{formatDate(article.updated ?? article.date)}</time><span>{article.readingTimeMinutes}分で読めます</span><ReaderControls /></div></div>
+        <div className="world-document-title"><Link href={worldUrl}>← {returnLabel}に戻る</Link><p className="world-document-kicker">{article.category} / FIELD NOTES</p><h1>{article.title}</h1><p>{article.description}</p><div className="world-document-meta"><time dateTime={article.updated ?? article.date}>{formatDate(article.updated ?? article.date)}</time><span>{article.readingTimeMinutes}分で読めます</span><ReaderControls /></div></div>
         <div className="world-document-hero"><ReaderMechanism world={world} slug={article.slug} /><span>ORIFOLIO · {world.id.toUpperCase()}</span></div>
       </header>
       <div className="world-document-columns">
-        <aside className="world-document-toc"><div id="article-contents"><TableOfContents headings={article.headings} /></div><div className="document-blueprint" aria-hidden="true"><svg viewBox="0 0 200 220"><g fill="none" stroke="currentColor" strokeWidth=".7"><circle cx="95" cy="90" r="65"/><circle cx="95" cy="90" r="42"/><circle cx="95" cy="90" r="18"/><path d="M95 8v164M10 90h170M30 25l130 130M30 155L160 25M30 180h135M30 175v10M165 175v10"/></g></svg><span>ORIFOLIO<br />OBSERVATION NOTES</span></div></aside>
+        <aside className="world-document-toc">{series ? <SeriesArticleContents series={series} currentSlug={article.slug} /> : null}<div id="article-contents"><TableOfContents headings={article.headings} /></div><div className="document-blueprint" aria-hidden="true"><svg viewBox="0 0 200 220"><g fill="none" stroke="currentColor" strokeWidth=".7"><circle cx="95" cy="90" r="65"/><circle cx="95" cy="90" r="42"/><circle cx="95" cy="90" r="18"/><path d="M95 8v164M10 90h170M30 25l130 130M30 155L160 25M30 180h135M30 175v10M165 175v10"/></g></svg><span>ORIFOLIO<br />OBSERVATION NOTES</span></div></aside>
         <div className="world-document-body">
           {guide ? <figure className="world-process"><figcaption>{guide.title}</figcaption><ol>{guide.steps.map((step,index) => <li key={step}><div className="process-mechanism" aria-hidden="true"><ProcessMechanism world={world} index={index} mechanism={guide.mechanisms?.[index]} /></div><strong>{step}</strong>{index < 2 ? <span className="process-arrow" aria-hidden="true">→</span> : null}</li>)}</ol><p>本文で扱う範囲の見取り図。機械の姿は学習用の比喩です。</p></figure> : null}
           <div className="prose reading-prose"><MdxContent source={article.content} /></div>
         </div>
-        <aside className="world-document-notes"><section className="document-note"><h2>読むポイント</h2><p>{guide?.note ?? article.description}</p><small>本文の説明に沿って、境界と条件を確認してください。</small></section>{nextArticle ? <section className="document-next"><h2>次に読む</h2><div className="document-next-art"><ReaderMechanism world={world} slug={nextArticle.slug} /></div><Link href={nextArticle.url}>{nextArticle.title}<span aria-hidden="true"> →</span></Link></section> : null}<Link className="document-world-return" href={worldUrl}>展示室へ戻る →</Link></aside>
+        <aside className="world-document-notes"><section className="document-note"><h2>読むポイント</h2><p>{guide?.note ?? article.description}</p><small>本文の説明に沿って、境界と条件を確認してください。</small></section>{nextArticle ? <section className="document-next"><h2>{series ? "シリーズの次の記事" : "次に読む"}</h2><div className="document-next-art"><ReaderMechanism world={world} slug={nextArticle.slug} /></div><Link href={nextArticle.url}>{nextArticle.title}<span aria-hidden="true"> →</span></Link></section> : null}<Link className="document-world-return" href={worldUrl}>{series ? "シリーズの入口" : "展示室"}へ戻る →</Link></aside>
       </div>
-      <nav className="reader-return" aria-label="読み終えた後の移動"><Link href="/articles">← 記事一覧へ</Link><a href="#article-contents">目次 ↑</a></nav>
+      <nav className="reader-return" aria-label="読み終えた後の移動"><Link href={series ? worldUrl : "/articles"}>← {series ? "シリーズの入口" : "記事一覧"}へ</Link><a href="#article-contents">目次 ↑</a></nav>
     </div>
   </>;
 }

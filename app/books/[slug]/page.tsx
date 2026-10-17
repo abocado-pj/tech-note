@@ -7,6 +7,7 @@ import { TableOfContents } from "@/components/toc";
 import { getAllBooks, getBookBySlug } from "@/lib/books";
 import { absoluteUrl } from "@/lib/site";
 import { BookCover } from "@/components/book-cover";
+import { LAMBDA_SERIES_SLUG, LAMBDA_SERIES_URL } from "@/lib/lambda-inspection";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -65,15 +66,17 @@ export default async function BookPage({ params }: PageProps) {
   const { slug } = await params;
   const book = getBookBySlug(slug);
   if (!book) notFound();
+  const lambdaBook = slug === LAMBDA_SERIES_SLUG;
   return (
-    <article className="page-shell reader-shell">
+    <article className={`page-shell reader-shell${lambdaBook ? " lambda-book" : ""}`}>
       <header className="reader-heading book-heading">
         <div className="book-heading__text">
         <nav className="reader-breadcrumb" aria-label="パンくず">
           <Link href="/books">ブック</Link>
           <span aria-hidden>/</span>
-          <span>{book.category}</span>
+          {lambdaBook ? <Link href={LAMBDA_SERIES_URL}>Lambdaの点検机</Link> : <span>{book.category}</span>}
         </nav>
+        {lambdaBook ? <p className="inspection-kicker">BOUND INSPECTION FILES / AWS</p> : null}
         <h1>{book.title}</h1>
         <p className="reader-description">{book.subtitle}</p>
         <div className="reader-meta">
@@ -86,6 +89,7 @@ export default async function BookPage({ params }: PageProps) {
           <div className="reader-cover"><BookCover book={book} /></div>
         ) : null}
       </header>
+      {lambdaBook ? <p className="inspection-book-context">藍色の一冊に、入口・実行・AWSへの権限・利用者の認可を分けて綴じています。<Link href={LAMBDA_SERIES_URL}>独立した2記事から読む →</Link></p> : null}
       <section className="book-overview" aria-labelledby="book-outline-heading">
         <div className="section-heading"><h2 id="book-outline-heading">このブックの構成</h2></div>
         <p>{book.description}</p>

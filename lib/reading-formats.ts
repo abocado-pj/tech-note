@@ -8,7 +8,7 @@ export const READING_FORMATS = [
   {
     id: "articles",
     title: "記事",
-    description: "問いに沿って構成した、具体例のある詳しい解説。",
+    description: "単独で読める、具体例のある詳しい解説。",
     href: "/articles",
   },
   {
@@ -20,4 +20,4 @@ export const READING_FORMATS = [
 ] as const;
 
 export const SERIES_DESCRIPTION =
-  "共通テーマの独立した記事を束ねる分類です。どの記事からでも読めます。";
+  "共通テーマの記事を、シリーズの中で探して読みます。どの記事からでも始められます。";

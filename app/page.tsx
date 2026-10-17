@@ -4,15 +4,15 @@ import { CatalogCard } from "@/components/catalog-item";
 import { ArticleThumbnail } from "@/components/article-thumbnail";
 import { NightBookshelf } from "@/components/night-bookshelf";
 import { getAllNotes } from "@/lib/notes";
-import { getAllArticles } from "@/lib/articles";
+import { getStandaloneArticles } from "@/lib/articles";
 import { getAllBooks } from "@/lib/books";
 import { withBasePath } from "@/lib/site";
 
 export default function HomePage() {
-  const allArticles = getAllArticles();
+  const allArticles = getStandaloneArticles();
   const featuredSlugs = [
     "architecture/auth/authentication-types",
-    "aws/lambda/typescript-handler-and-api-entry",
+    "sql/internal/explain-analyze",
   ];
   const articles = featuredSlugs.flatMap((slug) =>
     allArticles.filter((article) => article.slug === slug),

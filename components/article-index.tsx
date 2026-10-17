@@ -1,9 +1,9 @@
 import { Newspaper } from "./newspaper";
-import { getAllArticles } from "@/lib/articles";
+import { getStandaloneArticles } from "@/lib/articles";
 
 export const ARTICLES_PER_PAGE = 4;
 export function ArticleIndex({ page = 1 }: { page?: number }) {
-  const items = getAllArticles().map((article) => ({
+  const items = getStandaloneArticles().map((article) => ({
     title: article.title,
     description: article.description,
     url: article.url,

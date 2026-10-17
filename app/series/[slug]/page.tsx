@@ -8,6 +8,8 @@ import { getSeriesArtwork } from "@/lib/collection-artwork";
 import { ArticleCard } from "@/components/article-card";
 import { ReadingWorldView } from "@/components/reading-world";
 import { getReadingWorld } from "@/lib/worlds";
+import { LambdaSeriesRoom } from "@/components/lambda-series-room";
+import { LAMBDA_SERIES_SLUG } from "@/lib/lambda-inspection";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -42,6 +44,7 @@ export default async function SeriesDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const series = getSeries().find((item) => item.slug === slug);
   if (!series) notFound();
+  if (slug === LAMBDA_SERIES_SLUG) return <LambdaSeriesRoom series={series} />;
   const world = slug === "world-file-extensions" ? getReadingWorld("formats") : undefined;
   return (
     <>{world ? <ReadingWorldView world={world} articles={series.articles.map(({ slug, title, url }) => ({ slug, title, url }))} /> : null}<div className="page-shell narrow-collection">

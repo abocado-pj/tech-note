@@ -125,6 +125,7 @@ export function SearchPanel({
                 <Link href={result.url}>{result.title}</Link>
               </h2>
               <p>{result.description}</p>
+              {result.series && result.seriesUrl ? <p className="search-result-series">所属シリーズ：<Link href={result.seriesUrl}>{result.series}</Link></p> : null}
             </article>
           ))}
           {results.length === 0 ? (

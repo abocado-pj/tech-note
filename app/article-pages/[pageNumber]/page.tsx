@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArticleIndex, ARTICLES_PER_PAGE } from "@/components/article-index";
-import { getAllArticles, paginateArticles } from "@/lib/articles";
+import { getStandaloneArticles, paginateArticles } from "@/lib/articles";
 import { absoluteUrl } from "@/lib/site";
 
 type PageProps = {
@@ -11,7 +11,7 @@ type PageProps = {
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const totalPages = Math.ceil(getAllArticles().length / ARTICLES_PER_PAGE);
+  const totalPages = Math.ceil(getStandaloneArticles().length / ARTICLES_PER_PAGE);
   return Array.from({ length: Math.max(0, totalPages - 1) }, (_, index) => ({
     pageNumber: String(index + 2),
   }));
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function ArticlesPaginatedPage({ params }: PageProps) {
   const { pageNumber } = await params;
   const page = Number(pageNumber);
-  const paginated = paginateArticles(getAllArticles(), page, ARTICLES_PER_PAGE);
+  const paginated = paginateArticles(getStandaloneArticles(), page, ARTICLES_PER_PAGE);
 
   if (!Number.isInteger(page) || page < 2 || page > paginated.totalPages) {
     notFound();

@@ -8,14 +8,17 @@ import {
   getAllArticles,
   getArticleBySlug,
   getRelatedArticles,
+  getArticleSeriesDefinition,
+  getSeries,
 } from "@/lib/articles";
 import { getAllBooks } from "@/lib/books";
 import { getAllNotes } from "@/lib/notes";
 import { getBooksUsingArticle, getNotesForArticle } from "@/lib/reading-relations";
-import { getSeriesBookDefinition } from "@/lib/series-books";
 import { absoluteUrl } from "@/lib/site";
 import { getArticleWorld } from "@/lib/worlds";
 import { WorldArticleReader } from "@/components/world-article-reader";
+import { LambdaInspectionArticle } from "@/components/lambda-inspection-article";
+import { getLambdaInspection, LAMBDA_INSPECTIONS } from "@/lib/lambda-inspection";
 
 type PageProps = {
   params: Promise<{ slug: string[] }>;
@@ -84,16 +87,20 @@ export default async function ArticlePage({ params }: PageProps) {
   if (!article) notFound();
   const related = getRelatedArticles(article, 3);
   const adjacent = getAdjacentArticles(article);
-  const series = article.series
-    ? getSeriesBookDefinition(article.series.slug)
-    : undefined;
+  const seriesDefinition = getArticleSeriesDefinition(article);
+  const series = seriesDefinition ? getSeries().find((item) => item.slug === seriesDefinition.slug) : undefined;
   const books = getBooksUsingArticle(article, getAllBooks());
   const notes = getNotesForArticle(article, getAllNotes());
   const world = getArticleWorld(article.slug);
-  const nextWorldArticle = world ? (adjacent.next && getArticleWorld(adjacent.next.slug)?.id === world.id ? adjacent.next : getAllArticles().find((item) => item.slug !== article.slug && getArticleWorld(item.slug)?.id === world.id)) : undefined;
+  const lambdaInspection = getLambdaInspection(article.slug);
+  const companionSlug = lambdaInspection
+    ? LAMBDA_INSPECTIONS.find((inspection) => inspection.slug !== article.slug)?.slug
+    : undefined;
+  const companion = companionSlug ? getAllArticles().find((item) => item.slug === companionSlug) : undefined;
+  const nextWorldArticle = series ? adjacent.next : world ? (adjacent.next && getArticleWorld(adjacent.next.slug)?.id === world.id ? adjacent.next : getAllArticles().find((item) => item.slug !== article.slug && !getArticleSeriesDefinition(item) && getArticleWorld(item.slug)?.id === world.id)) : undefined;
   return (
-    <article className={`page-shell reader-shell${world ? ` world-reader world-reader--${world.id}` : ""}`}>
-      {world ? <WorldArticleReader article={article} world={world} nextArticle={nextWorldArticle} /> : <ArticleReader article={article} />}
+    <article className={`page-shell reader-shell${world ? ` world-reader world-reader--${world.id}` : ""}${lambdaInspection ? " lambda-reader" : ""}`}>
+      {lambdaInspection ? <LambdaInspectionArticle article={article} inspection={lambdaInspection} companion={companion} series={series} /> : world ? <WorldArticleReader article={article} world={world} nextArticle={nextWorldArticle} series={series} /> : <ArticleReader article={article} />}
       {notes.length ? (
         <section className="reading-context" aria-labelledby="related-notes-heading">
           <h2 id="related-notes-heading">関連する短いノート</h2>
@@ -118,10 +125,10 @@ export default async function ArticlePage({ params }: PageProps) {
           </Link>
         </section>
       ) : null}
-      <nav className="reading-adjacent" aria-label="関連する前後の記事">
+      <nav className="reading-adjacent" aria-label={series ? "シリーズ内の前後の記事" : "関連する前後の記事"}>
         {adjacent.previous ? (
           <Link href={adjacent.previous.url}>
-            <span>← 同じテーマの前の記事</span>
+            <span>← {series ? "シリーズの前の記事" : "同じテーマの前の記事"}</span>
             <strong>{adjacent.previous.title}</strong>
           </Link>
         ) : (
@@ -129,7 +136,7 @@ export default async function ArticlePage({ params }: PageProps) {
         )}
         {adjacent.next ? (
           <Link href={adjacent.next.url}>
-            <span>同じテーマの次の記事 →</span>
+            <span>{series ? "シリーズの次の記事" : "同じテーマの次の記事"} →</span>
             <strong>{adjacent.next.title}</strong>
           </Link>
         ) : null}

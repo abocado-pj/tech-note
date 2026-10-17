@@ -132,6 +132,7 @@ export type SearchEntry = {
   level: ArticleLevel;
   articleType: ArticleType;
   series?: string;
+  seriesUrl?: string;
   content: string;
 };
 
@@ -144,17 +145,26 @@ export function getAllArticles(options: { includeDrafts?: boolean } = {}) {
   return articles;
 }
 
+/** Only explicit membership in a registered series separates an article from the journal. */
+export function getArticleSeriesDefinition(article: Pick<Article, "series">) {
+  return article.series ? getSeriesBookDefinition(article.series.slug) : undefined;
+}
+
+export function getStandaloneArticles() {
+  return getAllArticles().filter((article) => !getArticleSeriesDefinition(article));
+}
+
 export function getArticleBySlug(slugSegments: string[]) {
   const slug = slugSegments.join("/");
   return getAllArticles().find((article) => article.slug === slug);
 }
 
 export function getAdjacentArticles(article: Article) {
-  const seriesArticles = article.series ? getArticlesBySeries(article.series.slug) : [];
+  const series = getArticleSeriesDefinition(article);
   const topicPath = article.slugSegments.slice(0, -1).join("/");
-  const articles = seriesArticles.length > 1
-    ? seriesArticles
-    : getAllArticles()
+  const articles = series
+    ? getArticlesBySeries(series.slug)
+    : getStandaloneArticles()
         .filter((candidate) => candidate.slugSegments.slice(0, -1).join("/") === topicPath)
         .sort(compareArticlesAsc);
   const currentIndex = articles.findIndex((item) => item.slug === article.slug);
@@ -169,8 +179,12 @@ export function getAdjacentArticles(article: Article) {
 }
 
 export function getRelatedArticles(article: Article, limit = 4) {
+  const series = getArticleSeriesDefinition(article);
   return getAllArticles()
     .filter((candidate) => candidate.slug !== article.slug)
+    .filter((candidate) => series
+      ? getArticleSeriesDefinition(candidate)?.slug === series.slug
+      : !getArticleSeriesDefinition(candidate))
     .map((candidate) => ({
       article: candidate,
       score: relatedScore(article, candidate),
@@ -182,6 +196,7 @@ export function getRelatedArticles(article: Article, limit = 4) {
 }
 
 export function getCategories(): TaxonomyItem[] {
+  const articles = getStandaloneArticles();
   return countBy(
     getAllArticles().map((article) => ({
       name: article.category,
@@ -190,6 +205,7 @@ export function getCategories(): TaxonomyItem[] {
   )
     .map((category) => ({
       ...category,
+      count: articles.filter((article) => article.categorySlug === category.slug).length,
       description: getKnowledgeDomain(category.slug)?.description,
     }))
     .sort(
@@ -201,6 +217,7 @@ export function getCategories(): TaxonomyItem[] {
 }
 
 export function getTags(): TaxonomyItem[] {
+  const articles = getStandaloneArticles();
   return countBy(
     getAllArticles().flatMap((article) =>
       article.tags.map((tag) => ({
@@ -208,19 +225,18 @@ export function getTags(): TaxonomyItem[] {
         slug: slugify(tag),
       })),
     ),
-  );
+  ).map((tag) => ({
+    ...tag,
+    count: articles.filter((article) => article.tags.some((name) => slugify(name) === tag.slug)).length,
+  }));
 }
 
 export function getSeries(): SeriesItem[] {
   const articles = getAllArticles();
 
   return SERIES_BOOKS.map((definition) => {
-    const definedArticleSlugs = new Set(
-      definition.sections.flatMap((section) => section.articleSlugs),
-    );
     const definitionArticles = articles.filter(
-      (article) =>
-        definedArticleSlugs.has(article.slug) || article.series?.slug === definition.slug,
+      (article) => getArticleSeriesDefinition(article)?.slug === definition.slug,
     );
 
     if (definitionArticles.length === 0) {
@@ -255,11 +271,11 @@ export function getSeries(): SeriesItem[] {
 }
 
 export function getArticlesByCategory(categorySlug: string) {
-  return getAllArticles().filter((article) => article.categorySlug === categorySlug);
+  return getStandaloneArticles().filter((article) => article.categorySlug === categorySlug);
 }
 
 export function getArticlesByTag(tagSlug: string) {
-  return getAllArticles().filter((article) =>
+  return getStandaloneArticles().filter((article) =>
     article.tags.some((tag) => slugify(tag) === tagSlug),
   );
 }
@@ -271,7 +287,7 @@ export function getArticlesBySeries(seriesSlug: string) {
 
 export function getSearchIndex(): SearchEntry[] {
   return getAllArticles().map((article) => {
-    const publicSeries = article.series ? getSeriesBookDefinition(article.series.slug) : undefined;
+    const publicSeries = getArticleSeriesDefinition(article);
 
     return {
       title: article.title,
@@ -283,6 +299,7 @@ export function getSearchIndex(): SearchEntry[] {
       level: article.level,
       articleType: article.articleType,
       series: publicSeries?.name,
+      seriesUrl: publicSeries ? `/series/${publicSeries.slug}` : undefined,
       content: normalizeSearchText(article.plainText),
     };
   });

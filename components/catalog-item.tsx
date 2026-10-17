@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArticleThumbnail } from "./article-thumbnail";
 import { formatDate } from "@/lib/format";
+import { LambdaInspectionDevice } from "./lambda-inspection-art";
 
 export type CatalogItem = {
   title: string;
@@ -11,6 +12,7 @@ export type CatalogItem = {
   date: string;
   tags: string[];
   articleCount?: number;
+  artwork?: "lambda-inspection";
 };
 
 export function CatalogCard({
@@ -22,14 +24,14 @@ export function CatalogCard({
 }) {
   return (
     <article className={`catalog-card catalog-card--${kind}`}>
-      {item.thumbnail ? (
+      {item.thumbnail || item.artwork ? (
         <Link
           href={item.url}
           className="catalog-card__image"
           tabIndex={-1}
           aria-hidden="true"
         >
-          <ArticleThumbnail article={item} framed={false} />
+          {item.artwork === "lambda-inspection" ? <div className="lambda-catalog-art"><small>LAMBDA / INSPECTION DESK</small><LambdaInspectionDevice kind="entry" /></div> : <ArticleThumbnail article={item} framed={false} />}
         </Link>
       ) : null}
       <div className="catalog-card__body">

@@ -2,6 +2,8 @@ import type { CSSProperties } from "react";
 import { Database, Code2, Workflow, type LucideIcon } from "lucide-react";
 import type { Book } from "@/lib/books";
 import { withBasePath } from "@/lib/site";
+import { LAMBDA_SERIES_SLUG } from "@/lib/lambda-inspection";
+import { LambdaJacketEmblem } from "./lambda-boundary-glyph";
 
 type PhysicalBookProps = {
   title: string;
@@ -61,18 +63,42 @@ const jackets: Record<string, { tone: string; Icon: LucideIcon }> = {
 };
 
 export function BookJacket({ book }: { book: JacketBook }) {
+  if (book.slug === LAMBDA_SERIES_SLUG) {
+    return (
+      <span className="book-jacket book-jacket--lambda book-jacket--inspection">
+        <span className="night-book__spine" aria-hidden="true">
+          <span>{book.title}</span>
+          <small>ORIFOLIO · AWS</small>
+        </span>
+        <span className="night-book__cover">
+          <small>ORIFOLIO / INSPECTION FILES</small>
+          <strong>{book.title}</strong>
+          <span className="lambda-jacket-subtitle">{book.subtitle}</span>
+          <LambdaJacketEmblem />
+          <span className="lambda-jacket-plate">入口・実行・権限・認可</span>
+          <span className="night-book__imprint">orifolio</span>
+        </span>
+      </span>
+    );
+  }
   const { tone, Icon } = jackets[book.slug] ?? {
     tone: "database",
     Icon: Database,
   };
   return (
     <span className={`book-jacket book-jacket--${tone}`}>
-      <span className="night-book__spine" aria-hidden="true">{book.title}</span>
+      <span className="night-book__spine" aria-hidden="true">
+        {book.title}
+      </span>
       <span className="night-book__cover">
         <small>ORIFOLIO / TECHNOLOGY</small>
         <strong>{book.title}</strong>
         <span>{book.subtitle}</span>
-        <Icon strokeWidth={0.7} aria-hidden="true" className="night-book__icon" />
+        <Icon
+          strokeWidth={0.7}
+          aria-hidden="true"
+          className="night-book__icon"
+        />
         <span className="night-book__imprint">orifolio</span>
       </span>
     </span>

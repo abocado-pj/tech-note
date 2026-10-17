@@ -87,7 +87,7 @@ export function Newspaper({ items, initialPage = 1 }: { items: NewspaperItem[]; 
       if (event.key === "End") changePage(pages);
     }}>
       <header className="newspaper-masthead"><div><p>THE ORIFOLIO JOURNAL</p><h1 id="newspaper-heading">記事一覧</h1></div><label>記事を検索<input type="search" placeholder="キーワードを探す" value={query} onChange={(event) => { setQuery(event.target.value); setPage(1); setFold(0); }} /></label></header>
-      <div className="newspaper-edition"><p>日々の発見を、ひとつの紙面に。</p><span>{items[0]?.date.replaceAll("-", ".")}　 |　 {results.length} ARTICLES</span></div>
+      <div className="newspaper-edition"><p>単独で読める記事を、ひとつの紙面に。</p><span>{items[0]?.date.replaceAll("-", ".")}　 |　 {results.length} ARTICLES</span></div>
       <nav className="newspaper-categories" aria-label="記事の分野">{["", ...categories].map((name) => <button key={name} aria-pressed={category === name} onClick={() => { setCategory(name); setPage(1); setFold(0); }}>{name || "すべて"}</button>)}</nav>
       <div className={`newspaper-sheet${fold > 0 ? " is-folding" : ""}`} style={{ "--fold-progress": fold, "--fold-size": `${Math.max(65,fold * 980)}px` } as CSSProperties}>
         {fold > 0 && current < pages ? <div className="newspaper-under-sheet" aria-hidden="true" inert><PaperStories stories={nextStories} continuation={results[(current + 1) * 4]} /></div> : null}
@@ -99,7 +99,7 @@ export function Newspaper({ items, initialPage = 1 }: { items: NewspaperItem[]; 
       </div>
       <nav className="newspaper-pagination" aria-label="新聞のページ送り"><button onClick={() => changePage(current - 1)} disabled={current === 1}>← 前のページ</button><span aria-live="polite">{String(current).padStart(2, "0")} / {String(pages).padStart(2, "0")}</span><button onClick={() => changePage(current + 1)} disabled={current === pages}>次のページ →</button></nav>
       <p className="newspaper-help">記事を選んで読む · 角をドラッグしてめくる · 紙面にフォーカスして左右キー</p>
-      <nav className="newspaper-crosslinks" aria-label="読む入口"><Link href="/series">シリーズ・展示室から探す →</Link><Link href="/search">すべての読み物を検索 →</Link></nav>
+      <nav className="newspaper-crosslinks" aria-label="読む入口"><Link href="/series">シリーズの記事は、シリーズ内で読む →</Link><Link href="/search">シリーズ記事も含めて検索 →</Link></nav>
     </div>
   </section>;
 }
