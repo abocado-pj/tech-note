@@ -22,12 +22,20 @@ export function BookReader({ chapters, title, children }: BookReaderProps) {
   const positionRef = useRef<BookReaderPosition>({ mode: "continuous", page: 1 });
   const pendingScroll = useRef<PendingScroll | null>(null);
   const turnAnimation = useRef<Animation | null>(null);
+  const turningLeaf = useRef<HTMLDivElement | null>(null);
   const swipeStart = useRef<SwipeStart | null>(null);
   const [pages, setPages] = useState<ReaderPage[]>([]);
   const [position, setPosition] = useState<BookReaderPosition>({ mode: "continuous", page: 1 });
   const currentPage = pages[position.page - 1];
   const paged = position.mode === "pages";
   const chapterList = chapters.filter(chapter => chapter.depth === 2);
+
+  const cancelPageTurn = useCallback(() => {
+    turnAnimation.current?.cancel();
+    turnAnimation.current = null;
+    turningLeaf.current?.remove();
+    turningLeaf.current = null;
+  }, []);
 
   const anchorPage = useCallback((hash: string) => {
     let id: string;
@@ -47,19 +55,30 @@ export function BookReader({ chapters, title, children }: BookReaderProps) {
   const navigatePage = useCallback((requestedPage: number, anchor = "") => {
     const next = { ...positionRef.current, page: clampBookPage(requestedPage, leafElements.current.length) };
     if (next.page === positionRef.current.page && !anchor) return;
-    turnAnimation.current?.cancel();
-    if (next.mode === "pages" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    cancelPageTurn();
+    if (next.mode === "pages" && typeof Element.prototype.animate === "function" && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       const direction = next.page > positionRef.current.page ? 1 : -1;
-      turnAnimation.current = paperRef.current?.animate([
-        { opacity: 0.65, transform: `perspective(1200px) translateX(${direction * 9}px) rotateY(${direction * 1.5}deg)` },
-        { opacity: 1, transform: "perspective(1200px) translateX(0) rotateY(0)" },
-      ], { duration: 210, easing: "cubic-bezier(.2,0,.2,1)" }) ?? null;
+      const paper = paperRef.current;
+      const page = leafElements.current[positionRef.current.page - 1];
+      if (paper && page) {
+        const leaf = createTurningLeaf(paper, page);
+        turningLeaf.current = leaf;
+        leaf.style.transformOrigin = direction > 0 ? "left center" : "right center";
+        const animation = leaf.animate([
+          { opacity: 1, transform: "perspective(1600px) rotateY(0deg)", boxShadow: "2px 1px 3px #34220e11" },
+          { opacity: 1, transform: `perspective(1600px) rotateY(${-direction * 58}deg)`, boxShadow: `${direction * 22}px 9px 24px #34220e44`, offset: .55 },
+          { opacity: 0, transform: `perspective(1600px) rotateY(${-direction * 119}deg)`, boxShadow: "1px 0 2px #34220e11" },
+        ], { duration: 460, easing: "cubic-bezier(.3,0,.2,1)" });
+        turnAnimation.current = animation;
+        void animation.finished.then(() => leaf.remove(), () => leaf.remove());
+      }
     }
     window.history.pushState(null, "", bookReaderUrl(new URL(window.location.href), next, anchor));
     commitPosition(next, { anchor, focus: true });
-  }, [commitPosition]);
+  }, [cancelPageTurn, commitPosition]);
 
   const changeMode = useCallback(() => {
+    cancelPageTurn();
     const current = positionRef.current;
     let page = current.page;
     if (current.mode === "continuous") {
@@ -72,10 +91,11 @@ export function BookReader({ chapters, title, children }: BookReaderProps) {
     const anchor = anchorPage(hash) === page ? hash : firstPageAnchor(leafElements.current[page - 1]);
     window.history.pushState(null, "", bookReaderUrl(new URL(window.location.href), next, anchor));
     commitPosition(next, { anchor, focus: true, revealReader: next.mode === "pages" });
-  }, [anchorPage, commitPosition]);
+  }, [anchorPage, cancelPageTurn, commitPosition]);
 
   useEffect(() => {
     const syncFromLocation = () => {
+      cancelPageTurn();
       const url = new URL(window.location.href);
       const next = readBookReaderLocation(url, leafElements.current.length, anchorPage(url.hash));
       commitPosition(next, { anchor: url.hash, revealReader: next.mode === "pages" });
@@ -93,11 +113,11 @@ export function BookReader({ chapters, title, children }: BookReaderProps) {
     window.addEventListener("hashchange", syncFromLocation);
     return () => {
       cancelAnimationFrame(frame);
-      turnAnimation.current?.cancel();
+      cancelPageTurn();
       window.removeEventListener("popstate", syncFromLocation);
       window.removeEventListener("hashchange", syncFromLocation);
     };
-  }, [anchorPage, commitPosition]);
+  }, [anchorPage, cancelPageTurn, commitPosition]);
 
   useEffect(() => {
     const request = pendingScroll.current;
@@ -224,6 +244,37 @@ export function BookReader({ chapters, title, children }: BookReaderProps) {
       <noscript><p>全文を表示しています。ページをめくる操作はJavaScriptが有効なときに使えます。</p></noscript>
     </section>
   );
+}
+
+function createTurningLeaf(paper: HTMLDivElement, page: HTMLElement) {
+  const stack = paper.parentElement!;
+  const stackBounds = stack.getBoundingClientRect();
+  const bounds = paper.getBoundingClientRect();
+  const leaf = document.createElement("div");
+  // Keep the same paper/prose selectors while the visible page leaves the stack.
+  leaf.className = `${paper.className} book-turning-leaf`;
+  leaf.inert = true;
+  leaf.setAttribute("aria-hidden", "true");
+  Object.assign(leaf.style, {
+    top: `${bounds.top - stackBounds.top}px`, left: `${bounds.left - stackBounds.left}px`,
+    width: `${bounds.width}px`, height: `${bounds.height}px`,
+    padding: getComputedStyle(paper).padding,
+    background: getComputedStyle(stack).backgroundColor,
+    overflow: "hidden",
+  });
+  const clone = page.cloneNode(true) as HTMLElement;
+  clone.removeAttribute("data-book-page");
+  clone.setAttribute("data-book-turning-page", "");
+  clone.removeAttribute("id");
+  clone.querySelectorAll("[id]").forEach(element => element.removeAttribute("id"));
+  clone.style.marginTop = `${-paper.scrollTop}px`;
+  clone.style.display = "block";
+  const prose = document.createElement("div");
+  prose.className = "book-prose prose";
+  prose.append(clone);
+  leaf.append(prose);
+  stack.append(leaf);
+  return leaf;
 }
 
 function hasSelectedText() {

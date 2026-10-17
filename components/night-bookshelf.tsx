@@ -4,6 +4,8 @@ import Link from "next/link";
 import { X } from "lucide-react";
 import { useRef, useState } from "react";
 import { BookJacket } from "./book-cover";
+import { BookOpenLink } from "./book-opening";
+import { bookOpeningDetails } from "@/lib/book-artwork";
 
 export type ShelfBook = {
   title: string;
@@ -22,24 +24,23 @@ function ShelfContents({ book, onNavigate }: { book: ShelfBook; onNavigate?: () 
       <ol>
         {book.headings.slice(0, 3).map((heading, index) => (
           <li key={heading.id}>
-            <Link
+            <BookOpenLink book={bookOpeningDetails(book)}
               href={`${book.url}#${heading.id}`}
               onClick={onNavigate}
             >
               <span>{String(index + 1).padStart(2, "0")}</span>
               {heading.text}
               <span aria-hidden>›</span>
-            </Link>
+            </BookOpenLink>
           </li>
         ))}
       </ol>
-      <Link
-        href={book.url}
+      <BookOpenLink book={bookOpeningDetails(book)}
         className="blue-button"
         onClick={onNavigate}
       >
         この本を読む <span aria-hidden>→</span>
-      </Link>
+      </BookOpenLink>
     </>
   );
 }
@@ -61,13 +62,13 @@ export function NightBookshelf({ books }: { books: ShelfBook[] }) {
                 onMouseEnter={() => setSelected(index)}
                 onFocus={() => setSelected(index)}
               >
-                <Link
+                <BookOpenLink book={bookOpeningDetails(item)}
                   className="night-book"
                   href={item.url}
                   aria-label={`${item.title}を読む`}
                 >
                   <BookJacket book={item} />
-                </Link>
+                </BookOpenLink>
                 <button
                   className="book-contents-button"
                   onClick={() => {

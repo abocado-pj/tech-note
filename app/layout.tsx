@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { BookOpeningProvider } from "@/components/book-opening";
 import { ThemeScript } from "@/components/theme-toggle";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, absoluteUrl, withBasePath } from "@/lib/site";
 import "./globals.css";
@@ -10,6 +11,7 @@ import "./v2-ui.css";
 import "./orifolio.css";
 import "./worlds.css";
 import "./lambda-inspection.css";
+import "./book-collection.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -74,11 +76,13 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           本文へ移動
         </a>
-        <SiteHeader />
-        <main id="main-content" className="flex-1" tabIndex={-1}>
-          {children}
-        </main>
-        <SiteFooter />
+        <BookOpeningProvider>
+          <SiteHeader />
+          <main id="main-content" className="flex-1" tabIndex={-1}>
+            {children}
+          </main>
+          <SiteFooter />
+        </BookOpeningProvider>
       </body>
     </html>
   );

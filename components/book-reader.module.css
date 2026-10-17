@@ -30,7 +30,7 @@
 .reader[data-reading-mode="pages"] .paper { height: clamp(28rem, 68svh, 48rem); overflow-y: auto; overscroll-behavior-y: contain; padding: 28px 34px 40px; scrollbar-width: thin; }
 .reader[data-reading-mode="pages"] .paper :global(.book-prose) { max-width: none; font-size: 16px; }
 .reader[data-reading-mode="pages"] .paper :global([id]) { scroll-margin-top: 20px; }
-.reader[data-reading-mode="pages"] .paper :global([data-book-page] > h2:first-child), .reader[data-reading-mode="pages"] .paper :global([data-book-page] > h3:first-child) { margin-top: 0; }
+.reader[data-reading-mode="pages"] .paper :global(:is([data-book-page], [data-book-turning-page]) > h2:first-child), .reader[data-reading-mode="pages"] .paper :global(:is([data-book-page], [data-book-turning-page]) > h3:first-child) { margin-top: 0; }
 .reader[data-reading-mode="pages"] .paper :global(pre), .reader[data-reading-mode="pages"] .paper :global(table), .reader[data-reading-mode="pages"] .paper :global(.reader-diagram) { touch-action: auto; }
 .reader[data-reading-mode="pages"] .paper :global(table) { display: block; max-width: 100%; overflow-x: auto; }
 .reader[data-reading-mode="pages"] .paper :global(img) { max-width: 100%; height: auto; }

@@ -1,10 +1,8 @@
 import type { CSSProperties } from "react";
-import { Database, Code2, Workflow, type LucideIcon } from "lucide-react";
+import Image from "next/image";
 import type { Book } from "@/lib/books";
 import { withBasePath } from "@/lib/site";
-import { LAMBDA_SERIES_SLUG } from "@/lib/lambda-inspection";
-import { LambdaJacketEmblem } from "./lambda-boundary-glyph";
-import { InspectionTitle } from "./inspection-title";
+import { getBookArtwork } from "@/lib/book-artwork";
 
 type PhysicalBookProps = {
   title: string;
@@ -57,49 +55,20 @@ export function PhysicalBook({
 
 type JacketBook = Pick<Book, "title" | "subtitle" | "slug">;
 
-const jackets: Record<string, { tone: string; Icon: LucideIcon }> = {
-  "database-internal": { tone: "database", Icon: Database },
-  "lambda-api-boundaries": { tone: "lambda", Icon: Code2 },
-  "rails-raw-sql": { tone: "rails", Icon: Workflow },
-};
-
-export function BookJacket({ book }: { book: JacketBook }) {
-  if (book.slug === LAMBDA_SERIES_SLUG) {
-    return (
-      <span className="book-jacket book-jacket--lambda book-jacket--inspection">
-        <span className="night-book__spine" aria-hidden="true">
-          <span>{book.title}</span>
-          <small>ORIFOLIO · AWS</small>
-        </span>
-        <span className="night-book__cover">
-          <small>ORIFOLIO / INSPECTION FILES</small>
-          <strong><InspectionTitle title={book.title} /></strong>
-          <span className="lambda-jacket-subtitle">{book.subtitle}</span>
-          <LambdaJacketEmblem />
-          <span className="lambda-jacket-plate">入口・実行・権限・認可</span>
-          <span className="night-book__imprint">orifolio</span>
-        </span>
-      </span>
-    );
-  }
-  const { tone, Icon } = jackets[book.slug] ?? {
-    tone: "database",
-    Icon: Database,
-  };
+export function BookJacket({ book, eager = false }: { book: JacketBook; eager?: boolean }) {
+  const artwork = getBookArtwork(book.slug);
   return (
-    <span className={`book-jacket book-jacket--${tone}`}>
+    <span className={`book-jacket book-jacket--illustrated book-jacket--${artwork?.tone ?? "database"}`} data-book-cover-slug={book.slug}>
+      <span className="book-jacket__page-edge" aria-hidden="true" />
       <span className="night-book__spine" aria-hidden="true">
-        {book.title}
+        <span>{book.title}</span>
+        <small>orifolio</small>
       </span>
       <span className="night-book__cover">
-        <small>ORIFOLIO / TECHNOLOGY</small>
-        <strong>{book.title}</strong>
-        <span>{book.subtitle}</span>
-        <Icon
-          strokeWidth={0.7}
-          aria-hidden="true"
-          className="night-book__icon"
-        />
+        {artwork ? <Image className="book-jacket__art" src={withBasePath(artwork.image)} width={1024} height={1536} sizes="(max-width: 680px) 240px, 320px" loading={eager ? "eager" : "lazy"} decoding={eager ? "sync" : "async"} alt="" draggable={false} /> : null}
+        <small className="book-jacket__eyebrow">ORIFOLIO / TECHNICAL COLLECTION</small>
+        <strong className="book-jacket__title">{artwork ? artwork.lines.map((line, index) => <span key={line}>{index > 0 && book.title.includes(" ") && book.slug !== "lambda-api-boundaries" ? " " : ""}{line}</span>) : book.title}</strong>
+        <span className="book-jacket__subject">{artwork?.label}</span>
         <span className="night-book__imprint">orifolio</span>
       </span>
     </span>
