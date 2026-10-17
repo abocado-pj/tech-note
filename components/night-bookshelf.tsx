@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Database, Code2, Workflow, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useRef, useState } from "react";
+import { BookJacket } from "./book-cover";
 
 export type ShelfBook = {
   title: string;
@@ -11,7 +12,6 @@ export type ShelfBook = {
   url: string;
   headings: { id: string; text: string }[];
 };
-const icons = [Database, Code2, Workflow];
 
 export function NightBookshelf({ books }: { books: ShelfBook[] }) {
   const [selected, setSelected] = useState(0);
@@ -51,7 +51,6 @@ export function NightBookshelf({ books }: { books: ShelfBook[] }) {
       <div className="night-bookshelf__row">
         <div className="night-bookshelf__books">
           {books.map((item, index) => {
-            const Icon = icons[index % icons.length];
             return (
               <div
                 className="night-book-item"
@@ -60,24 +59,11 @@ export function NightBookshelf({ books }: { books: ShelfBook[] }) {
                 onFocus={() => setSelected(index)}
               >
                 <Link
-                  className={`night-book night-book--${index}`}
+                  className="night-book"
                   href={item.url}
                   aria-label={`${item.title}を読む`}
                 >
-                  <span className="night-book__spine" aria-hidden>
-                    {item.title}
-                  </span>
-                  <span className="night-book__cover">
-                    <small>ORIFOLIO / TECHNOLOGY</small>
-                    <strong>{item.title}</strong>
-                    <span>{item.subtitle}</span>
-                    <Icon
-                      strokeWidth={0.7}
-                      aria-hidden
-                      className="night-book__icon"
-                    />
-                    <span className="night-book__imprint">orifolio</span>
-                  </span>
+                  <BookJacket book={item} />
                 </Link>
                 <button
                   className="book-contents-button"
@@ -93,7 +79,7 @@ export function NightBookshelf({ books }: { books: ShelfBook[] }) {
             );
           })}
         </div>
-        <aside className="shelf-preview">{contents}</aside>
+        <aside className="shelf-preview" aria-label={`${book.title}の目次`}>{contents}</aside>
       </div>
       <div className="shelf-caption">
         <Link href="/books">↗　本で体系的に読む</Link>
@@ -101,6 +87,7 @@ export function NightBookshelf({ books }: { books: ShelfBook[] }) {
       </div>
       <dialog
         className="shelf-dialog"
+        aria-label={`${book.title}の目次`}
         ref={dialog}
         onClick={(event) => {
           if (event.target === event.currentTarget) dialog.current?.close();

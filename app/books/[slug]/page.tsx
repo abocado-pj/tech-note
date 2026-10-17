@@ -67,7 +67,8 @@ export default async function BookPage({ params }: PageProps) {
   if (!book) notFound();
   return (
     <article className="page-shell reader-shell">
-      <header className="reader-heading">
+      <header className="reader-heading book-heading">
+        <div className="book-heading__text">
         <nav className="reader-breadcrumb" aria-label="パンくず">
           <Link href="/books">ブック</Link>
           <span aria-hidden>/</span>
@@ -79,6 +80,7 @@ export default async function BookPage({ params }: PageProps) {
           <span>
             {book.headings.filter((heading) => heading.depth === 2).length}章
           </span>
+        </div>
         </div>
         {book.cover ? (
           <div className="reader-cover"><BookCover book={book} /></div>

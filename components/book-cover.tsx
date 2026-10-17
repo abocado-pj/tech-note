@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { Database, Code2, Workflow, type LucideIcon } from "lucide-react";
 import type { Book } from "@/lib/books";
 import { withBasePath } from "@/lib/site";
 
@@ -51,23 +52,39 @@ export function PhysicalBook({
   );
 }
 
-export function BookCover({
-  book,
-}: {
-  book: Pick<Book, "title" | "category" | "slug" | "cover">;
-}) {
-  const database = book.slug === "database-internal";
+type JacketBook = Pick<Book, "title" | "subtitle" | "slug">;
+
+const jackets: Record<string, { tone: string; Icon: LucideIcon }> = {
+  "database-internal": { tone: "database", Icon: Database },
+  "lambda-api-boundaries": { tone: "lambda", Icon: Code2 },
+  "rails-raw-sql": { tone: "rails", Icon: Workflow },
+};
+
+export function BookJacket({ book }: { book: JacketBook }) {
+  const { tone, Icon } = jackets[book.slug] ?? {
+    tone: "database",
+    Icon: Database,
+  };
   return (
-    <PhysicalBook
-      title={book.title}
-      category={book.category}
-      artwork={
-        database
-          ? "/images/orifolio/database-cover-wrap.webp"
-          : (book.cover ?? "/images/books/rails-raw-sql-cover.png")
-      }
-      wrap={database}
-      tone={database ? "database" : "neutral"}
-    />
+    <span className={`book-jacket book-jacket--${tone}`}>
+      <span className="night-book__spine" aria-hidden="true">{book.title}</span>
+      <span className="night-book__cover">
+        <small>ORIFOLIO / TECHNOLOGY</small>
+        <strong>{book.title}</strong>
+        <span>{book.subtitle}</span>
+        <Icon strokeWidth={0.7} aria-hidden="true" className="night-book__icon" />
+        <span className="night-book__imprint">orifolio</span>
+      </span>
+    </span>
+  );
+}
+
+export function BookCover({ book }: { book: JacketBook }) {
+  return (
+    <div className="book-cover-stage" aria-hidden="true">
+      <div className="night-book book-cover-volume">
+        <BookJacket book={book} />
+      </div>
+    </div>
   );
 }
