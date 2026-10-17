@@ -742,7 +742,7 @@ button:disabled {
   justify-content: space-between;
   gap: 20px;
   padding: 16px 0 18px;
-  border-top: 8px ridge #194171;
+  border-top: 8px ridge #655b4d;
   margin: 0 -52px;
   padding-inline: 52px;
   font-size: 13px;
@@ -1856,6 +1856,13 @@ html.dark .catalog-card--notes .article-row__meta > span {
 }
 .home-night-hero {
   background-size: 100% 100%;
+  /* The existing room image's shelf lies at 84–89% of its height. Tint only
+     that band; books, labels, wall and lamp keep their original colours. */
+  background-image:
+    linear-gradient(0deg, transparent 5%, #61584f 10%, #61584f 16%, transparent 19%),
+    linear-gradient(90deg, #06142933, #06142900),
+    url("/tech-note/images/orifolio/night-room.png");
+  background-blend-mode: color, normal, normal;
 }
 @media (max-width: 680px) {
   .book-contents-button {

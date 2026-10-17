@@ -8,6 +8,7 @@ import { getAllBooks, getBookBySlug } from "@/lib/books";
 import { absoluteUrl } from "@/lib/site";
 import { BookCover } from "@/components/book-cover";
 import { LAMBDA_SERIES_SLUG, LAMBDA_SERIES_URL } from "@/lib/lambda-inspection";
+import { InspectionTitle } from "@/components/inspection-title";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -77,7 +78,7 @@ export default async function BookPage({ params }: PageProps) {
           {lambdaBook ? <Link href={LAMBDA_SERIES_URL}>Lambdaの点検机</Link> : <span>{book.category}</span>}
         </nav>
         {lambdaBook ? <p className="inspection-kicker">BOUND INSPECTION FILES / AWS</p> : null}
-        <h1>{book.title}</h1>
+        <h1><InspectionTitle title={book.title} /></h1>
         <p className="reader-description">{book.subtitle}</p>
         <div className="reader-meta">
           <span>

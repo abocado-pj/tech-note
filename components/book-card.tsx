@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Book } from "@/lib/books";
 import { BookCover } from "./book-cover";
+import { InspectionTitle } from "./inspection-title";
 
 export function BookCard({
   book,
@@ -26,7 +27,7 @@ export function BookCard({
           {book.category} · {book.headings.filter(heading => heading.depth === 2).length}章
         </p>
         <h2>
-          <Link href={book.url}>{book.title}</Link>
+          <Link href={book.url}><InspectionTitle title={book.title} /></Link>
         </h2>
         <p>{book.subtitle}</p>
         <Link href={book.url} className="text-link">

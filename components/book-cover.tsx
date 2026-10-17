@@ -4,6 +4,7 @@ import type { Book } from "@/lib/books";
 import { withBasePath } from "@/lib/site";
 import { LAMBDA_SERIES_SLUG } from "@/lib/lambda-inspection";
 import { LambdaJacketEmblem } from "./lambda-boundary-glyph";
+import { InspectionTitle } from "./inspection-title";
 
 type PhysicalBookProps = {
   title: string;
@@ -72,7 +73,7 @@ export function BookJacket({ book }: { book: JacketBook }) {
         </span>
         <span className="night-book__cover">
           <small>ORIFOLIO / INSPECTION FILES</small>
-          <strong>{book.title}</strong>
+          <strong><InspectionTitle title={book.title} /></strong>
           <span className="lambda-jacket-subtitle">{book.subtitle}</span>
           <LambdaJacketEmblem />
           <span className="lambda-jacket-plate">入口・実行・権限・認可</span>

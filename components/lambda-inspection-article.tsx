@@ -13,6 +13,7 @@ import { ReaderControls } from "./reader-controls";
 import { TableOfContents } from "./toc";
 import { WorldToolbar } from "./world-toolbar";
 import { SeriesArticleContents } from "./series-article-contents";
+import { InspectionTitle } from "./inspection-title";
 
 function InspectionProcess({ inspection }: { inspection: LambdaInspection }) {
   const entry = inspection.kind === "entry";
@@ -56,9 +57,9 @@ function InspectionProcess({ inspection }: { inspection: LambdaInspection }) {
       <figcaption>
         <span>PROCESS NOTE / {inspection.number}</span>
         <strong>
-          {entry
+          <InspectionTitle title={entry
             ? "HTTPの入口と、配置したコードの実行"
-            : "利用者の認可と、AWS側のアクセス評価"}
+            : "利用者の認可と、AWS側のアクセス評価"} />
         </strong>
       </figcaption>
       <ol>
@@ -68,7 +69,7 @@ function InspectionProcess({ inspection }: { inspection: LambdaInspection }) {
             <span className="inspection-process__number">
               {String(index + 1).padStart(2, "0")}
             </span>
-            <strong>{step.title}</strong>
+            <strong><InspectionTitle title={step.title} /></strong>
             <p>{step.detail}</p>
             {index < steps.length - 1 ? (
               <span className="inspection-process__arrow" aria-hidden="true">
@@ -112,7 +113,7 @@ export function LambdaInspectionArticle({
           <p className="inspection-kicker">
             LAMBDA INSPECTION FILE / {inspection.number}
           </p>
-          <h1>{article.title}</h1>
+          <h1><InspectionTitle title={article.title} /></h1>
           <p>{article.description}</p>
           <div className="inspection-article-meta">
             <time dateTime={article.updated ?? article.date}>

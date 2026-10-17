@@ -7,6 +7,7 @@ import {
 } from "@/lib/lambda-inspection";
 import { LambdaBoundaryGlyph } from "./lambda-boundary-glyph";
 import { LambdaInspectionDevice } from "./lambda-inspection-art";
+import { InspectionTitle } from "./inspection-title";
 
 export function LambdaBoundaryIndex() {
   return (
@@ -42,7 +43,7 @@ export function LambdaSeriesRoom({ series }: { series: SeriesItem }) {
         <div className="inspection-room-intro">
           <div>
             <p className="inspection-kicker">ORIFOLIO · AWS INSPECTION DESK</p>
-            <h1>{series.name}</h1>
+            <h1><InspectionTitle title={series.name} /></h1>
             <p className="inspection-lead">{series.subtitle}</p>
             <p className="inspection-intro-copy">
               入口で受け取るもの。実行するコード。
@@ -106,7 +107,7 @@ export function LambdaSeriesRoom({ series }: { series: SeriesItem }) {
                 </div>
                 <LambdaInspectionDevice kind={inspection.kind} />
                 <p className="inspection-file__label">{inspection.label}</p>
-                <h3>{article.title}</h3>
+                <h3><InspectionTitle title={article.title} /></h3>
                 <p className="inspection-file__focus">{inspection.focus}</p>
                 <ul>
                   {inspection.checks.map((check) => (
