@@ -13,12 +13,8 @@ export type ShelfBook = {
   headings: { id: string; text: string }[];
 };
 
-export function NightBookshelf({ books }: { books: ShelfBook[] }) {
-  const [selected, setSelected] = useState(0);
-  const dialog = useRef<HTMLDialogElement>(null);
-  const book = books[selected];
-  if (!book) return null;
-  const contents = (
+function ShelfContents({ book, onNavigate }: { book: ShelfBook; onNavigate?: () => void }) {
+  return (
     <>
       <p className="shelf-preview__eyebrow">目次をひらく</p>
       <h2>{book.title}</h2>
@@ -28,7 +24,7 @@ export function NightBookshelf({ books }: { books: ShelfBook[] }) {
           <li key={heading.id}>
             <Link
               href={`${book.url}#${heading.id}`}
-              onClick={() => dialog.current?.close()}
+              onClick={onNavigate}
             >
               <span>{String(index + 1).padStart(2, "0")}</span>
               {heading.text}
@@ -40,12 +36,19 @@ export function NightBookshelf({ books }: { books: ShelfBook[] }) {
       <Link
         href={book.url}
         className="blue-button"
-        onClick={() => dialog.current?.close()}
+        onClick={onNavigate}
       >
         この本を読む <span aria-hidden>→</span>
       </Link>
     </>
   );
+}
+
+export function NightBookshelf({ books }: { books: ShelfBook[] }) {
+  const [selected, setSelected] = useState(0);
+  const dialog = useRef<HTMLDialogElement>(null);
+  const book = books[selected];
+  if (!book) return null;
   return (
     <section className="night-bookshelf" aria-label="公開中の本棚">
       <div className="night-bookshelf__row">
@@ -79,7 +82,18 @@ export function NightBookshelf({ books }: { books: ShelfBook[] }) {
             );
           })}
         </div>
-        <aside className="shelf-preview" aria-label={`${book.title}の目次`}>{contents}</aside>
+        <aside className="shelf-preview" aria-label={`${book.title}の目次`}>
+          {books.map((preview, index) => (
+            <div
+              className="shelf-preview__panel"
+              key={preview.slug}
+              aria-hidden={index !== selected}
+              inert={index !== selected}
+            >
+              <ShelfContents book={preview} />
+            </div>
+          ))}
+        </aside>
       </div>
       <div className="shelf-caption">
         <Link href="/books">↗　本で体系的に読む</Link>
@@ -100,7 +114,7 @@ export function NightBookshelf({ books }: { books: ShelfBook[] }) {
         >
           <X aria-hidden />
         </button>
-        {contents}
+        <ShelfContents book={book} onNavigate={() => dialog.current?.close()} />
       </dialog>
     </section>
   );

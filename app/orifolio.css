@@ -677,12 +677,26 @@ button:disabled {
   margin-left: 12px;
 }
 .shelf-preview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   background: #faf8f3;
   color: #101c3c;
   padding: 16px;
   border-radius: 5px;
   box-shadow: 0 8px 15px #0004;
   margin-bottom: 12px;
+}
+.shelf-preview__panel {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+}
+.shelf-preview__panel[aria-hidden="true"] {
+  visibility: hidden;
+  pointer-events: none;
+}
+.shelf-preview__panel .blue-button {
+  margin-top: auto;
 }
 .shelf-preview__eyebrow {
   font-size: 16px !important;
