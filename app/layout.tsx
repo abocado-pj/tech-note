@@ -12,6 +12,7 @@ import "./orifolio.css";
 import "./worlds.css";
 import "./lambda-inspection.css";
 import "./book-collection.css";
+import "./home-layout.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

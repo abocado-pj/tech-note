@@ -1,18 +1,18 @@
 import Link from "next/link";
 import { Search } from "lucide-react";
-import { CatalogCard } from "@/components/catalog-item";
-import { ArticleThumbnail } from "@/components/article-thumbnail";
+import { HomeReadingLists } from "@/components/home-reading-lists";
+import { RelatedMedia } from "@/components/related-media";
 import { NightBookshelf } from "@/components/night-bookshelf";
 import { getAllNotes } from "@/lib/notes";
-import { getStandaloneArticles } from "@/lib/articles";
+import { getAllArticles } from "@/lib/articles";
 import { getAllBooks } from "@/lib/books";
 import { withBasePath } from "@/lib/site";
 
 export default function HomePage() {
-  const allArticles = getStandaloneArticles();
+  const allArticles = getAllArticles();
   const featuredSlugs = [
     "architecture/auth/authentication-types",
-    "sql/internal/explain-analyze",
+    "aws/lambda/typescript-handler-and-api-entry",
   ];
   const articles = featuredSlugs.flatMap((slug) =>
     allArticles.filter((article) => article.slug === slug),
@@ -78,55 +78,8 @@ export default function HomePage() {
           }))}
         />
       </div>
-      <div className="home-reading-columns">
-        <section>
-          <div className="section-heading">
-            <h2>記事から探す</h2>
-            <Link href="/articles">すべての記事を見る　→</Link>
-          </div>
-          {articles.map((article) => (
-            <CatalogCard
-              key={article.slug}
-              item={{
-                title: article.title,
-                description: article.description,
-                url: article.url,
-                thumbnail: article.thumbnail,
-                category: article.category,
-                date: article.date,
-                tags: article.tags,
-              }}
-            />
-          ))}
-        </section>
-        <section>
-          <div className="section-heading">
-            <h2>小さなノート</h2>
-            <Link href="/notes">すべてのノートを見る　→</Link>
-          </div>
-          {getAllNotes()
-            .slice(0, 2)
-            .map((note) => (
-              <article className="home-note-row" key={note.slug}>
-                <Link href={note.url} tabIndex={-1} aria-hidden>
-                  <ArticleThumbnail article={note} framed={false} />
-                </Link>
-                <div>
-                  <h3>
-                    <Link href={note.url}>{note.title}</Link>
-                  </h3>
-                  <p>{note.description}</p>
-                  <time dateTime={note.date}>
-                    {note.date.replaceAll("-", ".")}
-                  </time>
-                </div>
-              </article>
-            ))}
-          <Link className="home-series-link" href="/series">
-            シリーズをたどる　→
-          </Link>
-        </section>
-      </div>
+      <HomeReadingLists articles={articles} notes={getAllNotes().slice(0, 2)} />
+      <RelatedMedia />
     </div>
   );
 }

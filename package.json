@@ -1,6 +1,6 @@
 {
   "name": "orifolio",
-  "version": "2.3.3-rc.1",
+  "version": "2.3.3",
   "private": true,
   "scripts": {
     "dev": "next dev",
