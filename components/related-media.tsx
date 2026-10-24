@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { withBasePath } from "@/lib/site";
 import { OssBrandMark, YomisakiBrandMark, YomisakiEditorialArtwork } from "./media-brand-assets";
 import styles from "./related-media.module.css";
@@ -14,7 +13,7 @@ export function RelatedMedia() {
       <div className={styles.grid}>
         <article className={`${styles.card} ${styles.oss}`} aria-labelledby="oss-media-heading">
           <div className={styles.identity}>
-            <p className={styles.status}>Orifolio内で公開中</p>
+            <p className={styles.status}>独立メディア</p>
             <div className={styles.brand}>
               <OssBrandMark className={styles.ossMark} />
               <div>
@@ -31,8 +30,8 @@ export function RelatedMedia() {
             <p className={styles.eyebrow}>観察するところ</p>
             <p className={styles.topics}>公開API <span>／</span> 内部構造 <span>／</span> テスト <span>／</span> 依存関係</p>
             <div className={styles.action}>
-              <Link href="/worlds/oss">OSS解剖学をひらく <span aria-hidden>→</span></Link>
-              <p>公開中の関連記事と、準備中のテーマを案内します。</p>
+              <a href="https://oss-kaibougaku.vercel.app/">OSS解剖学をひらく <span aria-hidden>↗</span></a>
+              <p>固定版のソースと図解を、独立した図書館で読めます。</p>
             </div>
           </div>
         </article>
