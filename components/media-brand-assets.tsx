@@ -16,6 +16,15 @@ export function OssBrandMark({ className }: { className?: string }) {
   );
 }
 
+/** Preserve the approved illustration crop; the card's copy and controls remain HTML. */
+export function OssCodeLibraryArtwork() {
+  return (
+    <svg viewBox="2 359 1335 410" width="1335" height="410" aria-hidden focusable="false" data-media-artwork="oss-code-library-v1">
+      <image href={withBasePath("/images/media/oss-code-library-v1.png")} width="1339" height="1174" />
+    </svg>
+  );
+}
+
 /** Exact approved pixels, crop and paper mask used by the public YOMISAKI masthead. */
 export function YomisakiBrandMark({ className }: { className?: string }) {
   return (

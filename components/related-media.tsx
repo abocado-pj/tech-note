@@ -1,6 +1,4 @@
-import Image from "next/image";
-import { withBasePath } from "@/lib/site";
-import { OssBrandMark, YomisakiBrandMark, YomisakiEditorialArtwork } from "./media-brand-assets";
+import { OssBrandMark, OssCodeLibraryArtwork, YomisakiBrandMark, YomisakiEditorialArtwork } from "./media-brand-assets";
 import styles from "./related-media.module.css";
 
 export function RelatedMedia() {
@@ -22,10 +20,10 @@ export function RelatedMedia() {
               </div>
             </div>
           </div>
-          <div className={styles.workshop} aria-hidden>
-            <Image src={withBasePath("/images/worlds/oss-reader-hero-v2.webp")} width={1536} height={1024} sizes="(max-width: 680px) 100vw, 50vw" alt="" />
-            <span className={styles.workshopCaption}>部品を外して、コードの奥へ。</span>
-          </div>
+          <figure className={styles.codeLibrary}>
+            <OssCodeLibraryArtwork />
+            <figcaption>一層ずつ、しくみが見えてくる。</figcaption>
+          </figure>
           <div className={styles.content}>
             <p className={styles.eyebrow}>観察するところ</p>
             <p className={styles.topics}>公開API <span>／</span> 内部構造 <span>／</span> テスト <span>／</span> 依存関係</p>
